@@ -1,6 +1,5 @@
 # maths_julia
-This is a collection of Julia codes for various topics: infinite series, oscillations, 
-numerical methods for ordinary differential equations and partial differential equations.
+This is a collection of Julia codes for various topics: infinite series, probability, calculus, oscillations, numerical methods for ordinary differential equations and partial differential equations, interpolation.
 The mathematics behind the code is explained in my book:
 
 MINIMUM MATHEMATICS for future scientists and engineers: An inspiring self-study note.
