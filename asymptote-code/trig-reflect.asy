@@ -99,7 +99,7 @@ dot(pic2,Ap,blue+3pt);
 
 add(shift(3.2,0)*pic2);
 
-// pic 2
+// pic 3
 
 draw(pic3,Label("$x$",Relative(0.99)),(-1.5,0)--(1.5,0),Arrow(TeXHead));
 draw(pic3,Label("$y$",Relative(0.99)),(0,-1.1)--(0,1.5),Arrow(TeXHead));
