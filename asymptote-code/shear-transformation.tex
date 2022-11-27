@@ -1,0 +1,139 @@
+\documentclass[]{standalone}
+
+
+\usepackage{amsmath,amsthm,amssymb, mathtools,mathrsfs,stmaryrd}
+%\usepackage[framed,amsmath,thmmarks]{ntheorem} lots of error
+%\usepackage{latexsym}
+\usepackage[pdftex]{graphicx} 
+\usepackage{empheq}
+%\usepackage{times}
+% wrapfig and floatflt: text/fig side by side, wrapfig sometimes annoying.
+\usepackage{wrapfig}
+\usepackage{afterpage}
+\usepackage{floatflt}
+\usepackage[makeroom]{cancel}
+\usepackage{verse}
+\usepackage{physics}
+\usepackage{emptypage}
+\usepackage{polynom}
+%\usepackage{floatrow} % table/figure side by side
+%\usepackage{pythontex}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+%\usepackage{breqn}
+%\usepackage{dsfont}
+\usepackage[usenames]{color}
+\usepackage[version=4]{mhchem}
+%\usepackage{epsfig}
+%\usepackage{psfrag}
+\let\Bbbk\relax
+\usepackage[subscriptcorrection,slantedGreek,nofontinfo,mtphrd]{mtpro2}
+\usepackage[retainorgcmds]{IEEEtrantools}
+%\usepackage[dvips]{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage[most]{tcolorbox} % boxes with color background
+%\usepackage[mathcal]{eucal}
+\usepackage{setspace}
+\usepackage[font=small,labelfont=md]{caption,subfig}
+%\usepackage[authoryear,nonamebreak, sectionbib]{natbib} 
+\usepackage{multirow}
+\usepackage[T1]{fontenc} % typing french
+%\usepackage{fancyheadings}
+%\usepackage[bookmarks=true,colorlinks=true,linkcolor=red,citecolor=blue,backref=page]{hyperref}
+% footmisc must be loaded before hyperref!!!!
+\usepackage[symbol]{footmisc}
+\usepackage{float}         % make new float environment such as boxes (captioned)
+\usepackage{listings}      % insert source code   
+\usepackage{numprint}
+%\usepackage{matlab-prettifier} % insert Matlab
+\newcommand\hmmax{0}
+%\usepackage{bm}
+%\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{siunitx}
+\usepackage{witharrows}
+
+%\usepackage{diffcoeff} % for derivatives
+\renewcommand{\rmdefault}{ptm}    % set Times as the default text font
+%\usepackage[textsize=tiny]{todonotes}
+\usepackage{nicefrac} % type inline fractions: \nicefrac{1}{2}
+\usepackage{lineno}  % write numbers for lines
+%\usepackage[mediumspace,mediumqspace,Grey,squaren]{SIunits}
+\usepackage{blkarray, bigstrut} % write complicated matrices with borders, see http://mirror.lagoon.nc/pub/ctan/macros/latex/contrib/blkarray/blkarray.pdf
+
+%\usepackage[norefs,nocites,ignoreunlbld]{refcheck} % warning for unreferred figs/tables/equas
+% search in the .log file for unused fig to detect figures not referred to in the text.
+\usepackage{makecell}
+
+% \usepackage{pgfplots}
+%  \pgfplotsset{compat=newest}
+%  %% the following commands are needed for some matlab2tikz features
+%  \usetikzlibrary{plotmarks}
+%  \usetikzlibrary{arrows.meta}
+%  \usepgfplotslibrary{patchplots}
+ \usepackage{grffile}
+\usepackage{gensymb} % for degree symbol
+%\usepackage{underscore}
+\usepackage[english]{babel}
+\usepackage{wasysym}
+% for source code font in listing sourcecodepro inconsolata
+\usepackage[scaled=0.84]{beramono}
+\usepackage{varwidth}
+\usepackage[Lenny]{fncychap}
+%\usepackage{perpage}
+\usepackage[scaled=0.84]{beramono} % use this font for code listing
+\usepackage{xpatch} % make boxed bigger
+\usepackage{nicematrix} % write difficult block matrices
+\usepackage{capt-of}
+
+\usepackage{scalefnt}
+\usepackage{tikz}  
+\usepackage{tikz-3dplot} 
+\usepackage{tikz,tkz-euclide}
+\usetikzlibrary{arrows,calc,patterns}
+
+% larger box around \boxed{}
+\pretocmd{\boxed}{\setlength{\fboxsep}{2.5pt}}{}{} 
+\sloppy
+
+\input{pre_commands.tex}
+
+\begin{document}
+%\scalefont{0.5}
+\begin{tikzpicture}
+  % limits
+  \def\xa{-5}
+  \def\xb{5}
+  \def\ya{-4}
+  \def\yb{4}
+
+\fill[orange!20!yellow] (0,0)--(1,0)--(2,1)--(1,1);
+
+% grid on a rectangle (-7,-3) to (7,3), step=0.5
+\draw[step=1cm, gray!20!white, very thin] (\xa, \ya) grid (\xb, \yb);
+% shear transformation (x+y,y), y =-2, and 2, to get two points on the transformed lines
+\foreach \x in {-4,...,4} {
+    \draw[color=red, thin] (-3 + \x, -3) -- (3 + \x, 3);
+}
+
+\foreach \y in {-3,...,3} {
+    \draw[color=red, thin] (-5, \y) -- (5, \y);
+}
+% \draw[color=green!80!black, line width=1.05pt] (-1, -3) -- (1, 3);
+% \draw[color=green!80!black, line width=1.05pt] (-7, -1) -- (7, 1);
+
+% axes
+  \draw[thin,->] (\xa,0) -- (\xb,0) node[right] {$x$};
+  \draw[thin,->] (0,\ya) -- (0,\yb) node[left] {$y$};
+
+
+\draw[color=red, line width=1.10pt, ->] (0, 0) -- (1, 0) node[below] {$\hat{\vb*{i}}$};
+\draw[color=blue, line width=1.10pt, ->] (0, 0) -- (1, 1)node[above left] {$\hat{\vb*{j}}$};
+
+
+\end{tikzpicture}
+
+\end{document}

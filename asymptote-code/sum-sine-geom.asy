@@ -6,7 +6,7 @@ usepackage("bm");
 
 settings.outformat="pdf"; // output is pdf
 
-defaultpen(fontsize(18pt));
+defaultpen(fontsize(30pt));
 size(24cm, keepAspect=true);
 
 picture pic2, pic3;
@@ -26,7 +26,7 @@ pair B=P1+(r/2)*dir(2alpha);
 pair center=extension(A,A+4dir(alpha+90),B,B+4dir(90+2alpha));
 real rr=sqrt( (center.x)^2 + (center.y)^2);
 
-draw(pic2,arc(center,rr,-90,5),red+1.2pt);
+draw(pic2,arc(center,rr,-90,5),red+1.9pt);
 
 draw(pic2,O--P1--P2--P3,black+1.9pt);
 draw(pic2,P1--(P1.x,0),black+1.2pt);
@@ -48,12 +48,12 @@ draw(pic2,P2--(xx,P2.y),black+1.2pt);
 draw(pic2,P3--(xx,P3.y),black+1.2pt);
 
 
-draw(pic2,Label("$\alpha$",MidPoint,Fill(white)),arc(O,0.26,0,alpha),black+1.2pt);
-draw(pic2,Label("$\beta$",MidPoint,Fill(white)),arc(O,0.36,alpha,beta),black+1.2pt);
+draw(pic2,Label("$\alpha$",MidPoint,Fill(white)),arc(O,0.26,0,alpha),black+1.5pt);
+draw(pic2,Label("$\beta$",MidPoint,Fill(white)),arc(O,0.36,alpha,beta),black+1.5pt);
 
 label(pic2,"$P_1$",P1+(0.,0.12),blue);
 label(pic2,"$P_2$",P2+(0.,0.17),blue);
-label(pic2,"$P_3$",P3+(0.,0.17),blue);
+label(pic2,"$P_3$",P3+(-.06,0.17),blue);
 label(pic2,"$O$",(-0.2,0.12),blue);
 label(pic2,"$d$",(1.2,1.2),red);
 label(pic2,"$1$",(0.8,0.2),blue);
@@ -79,14 +79,16 @@ draw(L2,(xxx,P1.y)--(xxx,P2.y),Arrows(TeXHead),Bars);
 draw(L3,(xxx,P2.y)--(xxx,P3.y),Arrows(TeXHead),Bars);
 
 // dots
-dot(pic2,O,blue+6pt);
-dot(pic2,P1,blue+6pt);
-dot(pic2,P2,blue+6pt);
-dot(pic2,P3,blue+6pt);
-dot(pic2,center,red+6pt);
+dot(pic2,O,blue+9pt);
+dot(pic2,P1,blue+9pt);
+dot(pic2,P2,blue+9pt);
+dot(pic2,P3,blue+9pt);
+dot(pic2,center,red+9pt);
 
 // axes
 
 //xlimits(-.2,3.2);
-draw(pic2,Label("$x$",Relative(0.99)),(-.2,0)--(3.2,0),black+1.2pt,Arrow(TeXHead));
-draw(pic2,Label("$y$",Relative(0.99)),(0,-.2)--(0,3.2),black+1.2pt,Arrow(TeXHead));
+draw(pic2,Label("$x$",Relative(0.99)),(-.2,0)--(3.2,0),black+1.9pt,Arrow(TeXHead));
+draw(pic2,Label("$y$",Relative(0.99)),(0,-.2)--(0,3.2),black+1.9pt,Arrow(TeXHead));
+
+add(pic2);

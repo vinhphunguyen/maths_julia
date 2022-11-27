@@ -1,0 +1,224 @@
+\makeatletter
+\renewcommand\fs@ruled{\def\@fs@cfont{\bfseries}\let\@fs@capt\floatc@ruled
+\def\@fs@pre{\hrule height 1.2pt depth0pt \kern2pt}%
+%\def\@fs@post{\hrule height1.2pt depth0pt \kern2pt}%
+\def\@fs@post{\kern2pt\hrule height 1.2pt depth0pt \kern2pt \relax}%
+\def\@fs@mid{\kern2pt\hrule\kern2pt}%
+\let\@fs@iftopcapt\iftrue}
+\makeatother
+
+% index generation
+% see LATEX companion p 354
+\newcommand{\bs}{\symbol{'134}}%print backslash
+\newcommand{\Com}[1]{\texttt{\bs#1}%
+\index{#1@\texttt{\bs#1}}}
+\newcommand{\Prog}[1]{\texttt{#1}%
+\index{#1@\texttt{#1} program }}
+
+% shortcuts
+
+% inner product <x,y>
+\newcommand{\ipn}{\langle \cdot , \cdot \rangle}
+
+% norm ||x||
+%\newcommand{\normn}[1]{\left|\left| {#1}  \right|\right|}
+\DeclarePairedDelimiterX{\normn}[1]{\lVert}{\rVert}{#1}
+\newcommand{\meas}[1]{\left|#1\right|}
+
+% McAuley brackets <x>
+\newcommand{\mcauley}[1]{\langle #1 \rangle}
+\newcommand{\inner}[1]{\langle #1 \rangle}
+
+\newcommand{\x}{~$\times$~}
+\newcommand{\tsty}{\textstyle}
+\newcommand{\dsty}{\displaystyle}
+\newcommand{\D}{\displaystyle}
+\newcommand{\arrow}{~$\rightarrow$~}
+\newcommand{\otheta}{\overline \theta}
+\newcommand{\mathG}{\mathcal{G}}
+
+
+
+% \newcommand{\Mi}{^\mathrm{m}}
+% \newcommand{\Ma}{^\mathrm{M}}
+
+\newcommand{\dep}{_\mathrm{d}}
+\newcommand{\ind}{_\mathrm{i}}
+
+\newcommand{\di}{d}
+
+\newcommand{\axb}{\vm{A}\vb*{x}=\vb*{b}}
+\newcommand{\ma}{\vm{A}}
+\newcommand{\mb}{\vm{B}}
+\newcommand{\mc}{\vm{C}}
+\newcommand{\mi}{\vm{I}}
+\newcommand{\vx}{\vb*{x}}
+\newcommand{\vy}{\vb*{y}}
+\newcommand{\Vu}{\vb*{u}}
+\newcommand{\vv}{\vb*{v}}
+\newcommand{\vw}{\vb*{w}}
+\newcommand{\vi}{\vb*{v}_1}
+\newcommand{\vii}{\vb*{v}_2}
+\newcommand{\viii}{\vb*{v}_3}
+\newcommand{\vn}{\vb*{v}_n}
+\newcommand{\vk}{\vb*{v}_k}
+\newcommand{\vI}{\vb*{v}_i}
+\newcommand{\vJ}{\vb*{v}_j}
+\newcommand{\Va}{\vb*{a}}
+\newcommand{\Vb}{\vb*{b}}
+\newcommand{\Vc}{\vb*{c}}
+\newcommand{\vz}{\vb*{0}}
+\newcommand{\Rn}{\mathbb{R}^n}
+\newcommand{\Rm}{\mathbb{R}^m}
+\newcommand{\RR}{\mathbb{R}^2}
+\newcommand{\RRR}{\mathbb{R}^3}
+\newcommand{\Rmn}{\mathbb{R}^{m\times n}}
+
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\newcommand{\defi}{\mathrel{\mathop:}=}
+
+% abbreviations
+
+\usepackage{xspace}
+\newcommand{\eg}{\textit{e.g.}\xspace}
+\newcommand{\ie}{\textit{i.e.},\xspace}
+\newcommand{\etc}{\textit{etc.}\@\xspace}
+\newcommand{\CF}{\textit{cf.}\,}     % i.e.
+\newcommand{\cf}{\textit{cf.}\,}     % i.e.
+\newcommand{\ETAL}{et. al.\@\xspace}
+\newcommand{\etal}{et. al.\@\xspace}
+\newcommand{\cmatrixb}{\left\{ \begin{matrix}}
+\newcommand{\cmatrixe}{\end{matrix} \right\}}
+
+% general vector/matrix commands:
+
+\newcommand{\tvm}[1]{\textbf{#1}}
+\newcommand{\vm}[1]{\mathbf{#1}}
+\newcommand{\vms}[1]{\mathbf{#1}}
+\newcommand{\bsymt}[1]{$\boldsymbol{#1}$\ }
+\newcommand{\bsym}[1]{\boldsymbol{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+
+% vector/matrix for space coordinates 'x' and 'y'
+
+
+
+\newcommand{\ve}[1]{\mathbf{e}_{#1}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\vxI}{\mathbf{x}_{I}}
+\newcommand{\vj}[1]{\mathbf{#1}_{j}}
+\newcommand{\xI}{x_{I}}
+\newcommand{\yI}{y_{I}}
+\newcommand{\hvx}{\hat{\mathbf{x}}}
+\newcommand{\hx}{\hat{x}}
+\newcommand{\hy}{\hat{y}}
+
+\newcommand{\sigxx}{\sigma_{xx}}
+\newcommand{\sigyy}{\sigma_{yy}}
+\newcommand{\sigzz}{\sigma_{zz}}
+\newcommand{\sigxy}{\sigma_{xy}}
+
+\newcommand{\trans}{^\top}
+%\newcommand{\trans}{^\mathrm{T}}
+\newcommand{\transi}{^\mathrm{-T}}
+\newcommand{\el}{_\mathrm{e}}
+\newcommand{\pl}{_\mathrm{p}}
+
+\newcommand{\inte} [1]{\int_\Omega #1 \mathrm{d}\Omega}
+\newcommand{\intE}[1]{\int_{\Omega_0} #1 \mathrm{d}\Omega_0}
+\newcommand{\intg}[1]{\int_{\Gamma} #1 \mathrm{d}\Gamma}
+\newcommand{\intG}[1]{\int_{\Gamma_0} #1 \mathrm{d}\Gamma_0}
+
+
+
+%\newcommand{\T}{\underline{\vm{T}}}
+
+% Shortcuts for making slides
+
+\newcommand{\fontone}{\bfseries\Large}
+\newcommand{\fonttwo}{\bfseries\large}
+\newcommand{\fontonesc}{\scshape\Large}
+\newcommand{\fonttwosc}{\scshape\large}
+\newcommand{\fontthree}{\bfseries}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bitem}{\begin{itemize}}
+\newcommand{\eitem}{\end{itemize}}
+
+% ************************ MATH TYPE MACROS **************************
+\newcommand{\mth}[1]{\mathit{#1}}      % print standard math italics
+\newcommand{\boldsym}[1]{\mbox{\boldmath${#1}$}}
+\newcommand{\vct}[1]{\boldsym{#1}}     % print vector
+\newcommand{\fnc}[1]{\prno{#1}}        % print function i.e. sin ...
+\newcommand{\mtx}[1]{\mathbf{#1}}      % print matrix
+\newcommand{\msc}[1]{\mathcal{#1}}     % print script
+\newcommand{\mss}[1]{\mathsf{#1}}      % print sans sarif
+\newcommand{\tns}[1]{\boldsym{#1}}     % print tensor
+\newcommand{\dbl}[1]{\mathbb{#1}}      % print sets letters like |R |C, etc...
+%\newcommand{\Grad}{\stackrel{\rightharpoonup}{\boldsym{\nabla}}\!\!}
+                                       % print gradient operator
+\newcommand{\GradL}{\!\!\stackrel{\leftharpoonup}{\boldsym{\nabla}}}
+                                       % print gradient operator
+\newcommand{\Grad}{\boldsym{\nabla}}
+                                       % print gradient operator
+\newcommand{\Div}{\Grad\cdot}          % print divergnece operator
+\newcommand{\DivL}{\cdot\GradL}        % print divergnece operator
+
+\newcommand{\Dx}{\Delta x} % print left jump oerator
+\newcommand{\Dt}{\Delta t} % print left jump oerator
+
+\newcommand{\ljump}{\lbrack \! \lbrack } % print left jump oerator
+\newcommand{\rjump}{\rbrack \! \rbrack } % print right jump oerator
+                                         % derivative
+\newcommand{\jump}[1]{\ljump {#1} \rjump} % jump operator
+\newcommand{\derivv}[2]{ \frac{d^2 {#1} }{d {#2}^2 } }
+\newcommand{\deriv}[2]{ \frac{d {#1} }{d {#2} } }   % partial derivivative
+\newcommand{\pderiv}[2]{ \frac{\partial {#1} }{\partial {#2} } }
+\newcommand{\pderivop}[1]{ \frac{\partial  }{\partial {#1} } }
+\newcommand{\pderivv}[2]{ \frac{\partial^2 {#1} }{\partial {#2}^2 } }
+\newcommand{\testspc}{\mathcal{V}}
+\newcommand{\trialspc}{\mathcal{S}}
+
+%\newcommand{\derivv}[2]{ \frac{d^2 {#1} }{d {#2}^2 } }
+
+\newcommand{\projuv}{\text{proj}_{\bsym{v}}(\bsym{u})}
+\newcommand{\perpuv}{\text{perp}_{\bsym{v}}(\bsym{u})}
+
+\newcommand{\volint}[1]{\int_{\Omega}\,{#1}\,dV} % integrals
+\newcommand{\bndint}[2]{\int_{#1}\,{#2}\,dS}
+
+
+%--My own definitions--
+
+\newcommand{\reals}{{\mathbb R}}
+\newcommand{\dof}{\emph{dof}}
+\newcommand{\dofs}{\emph{dofs}}
+\newcommand{\bfalfi}{\mbox{\boldmath$\alpha$\unboldmath$_i$}}
+\newcommand{\bfalfj}{\mbox{\boldmath$\alpha$\unboldmath$_j$}}
+\newcommand{\remark}[2]{\vspace{0.1cm}
+\noindent {\bf Remark #1:}  {#2}  \vspace{0.1cm}}
+\newcommand{\invisible}[1]{}
+\newcommand{\bgl}[1]{\mbox{\boldmath$#1$\unboldmath}}
+\newcommand{\parti}[2]{\frac{\partial #1}{\partial #2}}
+
+
+% ********************** VERBATIM AND IGNORE *************************
+\newcommand{\bv}{\begin{verbatim}}
+\newcommand{\V}{\verb}                  % EX: \V=-d{#@~}= Expr must
+                                        % fit on a line
+
+% ************************ FIGURE COMMANDS ***************************
+\newcommand{\testpix}[1]{\fbox{\begin{minipage}[c]{\textwidth}
+                      #1 \end{minipage} }}
+
+%\ifpdf
+% \newcommand{\putfig}[2]{\includegraphics[scale=#2]{#1.pdf}}
+%\else
+% \newcommand{\putfig}[2]{\includegraphics[scale=#2]{#1.eps}}
+%\fi
+
+\newcommand{\putpstex}[1]{\includegraphics{#1.pstex_t}}
+% END FIGURE COMMANDS

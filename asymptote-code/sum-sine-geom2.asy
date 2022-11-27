@@ -6,8 +6,6 @@ usepackage("bm");
 
 settings.outformat="pdf"; // output is pdf
 
-defaultpen(fontsize(13pt));
-size(10cm, keepAspect=true);
 
 picture pic2, pic3;
 
@@ -26,7 +24,7 @@ usepackage("bm");
 
 settings.outformat="pdf"; // output is pdf
 
-defaultpen(fontsize(18pt));
+defaultpen(fontsize(30pt));
 size(24cm, keepAspect=true);
 
 picture pic3;
@@ -58,9 +56,9 @@ draw(pic3,(1,0)--(0,0),black+1.9pt);
 draw(pic3,P1--(1,0),black+1.9pt);
 
 label(pic3,"$C$",(0,0.05),blue);
-label(pic3,"$O$",(1.1,0.02),blue);
-label(pic3,"$P_1$",P1+(0.,0.12),blue);
-label(pic3,"$P_2$",P2+(0.,0.07),blue);
+label(pic3,"$O$",(1.02,0.02),blue);
+label(pic3,"$P_1$",P1+(0.02,0.02),blue);
+label(pic3,"$P_2$",P2+(0.02,0.02),blue);
 label(pic3,"$P_3$",P3+(0.,0.07),blue);
 label(pic3,"$r$",(0.3,0.3),blue);
 
