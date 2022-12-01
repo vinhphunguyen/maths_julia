@@ -77,7 +77,7 @@
 \usepackage{anyfontsize}
 \usepackage{tikz,tkz-euclide}
 \usepackage{tikz-3dplot} 
-\usetikzlibrary{angles,quotes, arrows,calc,patterns,decorations.pathmorphing,decorations.pathreplacing,backgrounds,positioning,fit,matrix,math,shapes.geometric,shapes.misc}
+\usetikzlibrary{arrows.meta,angles,quotes, arrows,calc,patterns,decorations.pathmorphing,decorations.pathreplacing,backgrounds,positioning,fit,matrix,math,shapes.geometric,shapes.misc}
 \tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt}, cross/.default={1pt}}
 
 % \usepackage{pgfplots}
@@ -106,47 +106,25 @@
 
 \input{pre_commands.tex}
 
+\fontsize{12}{12}\selectfont
+
 \begin{document}
+ 
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw}]
+    \node[fill=cyan] (A) at (0,0) {Algebra};
+    \node[fill=cyan] (P) at (3,0) {Physics};
+    \node[fill=pink!40] (C) at (0,-3) {Chemistry};
+    \node[fill=pink!40] (H) at (3,-3) {History};
+\end{scope}
 
-
-\begin{tikzpicture}[scale=1]
-  
-  \coordinate (o) at (0,0);
-  \coordinate (a) at (4,0);
-  \coordinate (b) at (-2,-2);
-  \coordinate (c) at (0,4);
-  \coordinate (p) at (2,3);
-  \coordinate (q) at (2,-1);
-  \coordinate (e) at (-1,-1);
-  \coordinate (f) at (2+1,0);
-  \coordinate (i) at (-0.5,-0.5);
-  \coordinate (j) at (0.707,0.);
-
-  \draw[fill=cyan!20] (o)--(f)--(q)--(e)--cycle;
-
-  \draw[thick] (o)--(a);
-  \draw[thick] (o)--(b);
-  \draw[thick] (o)--(c);
-  \draw[thick,latex-, blue] (p)--(q);
-  \draw[thick,-latex,red] (o)--(i);
-  \draw[thick,-latex,red] (o)--(f);
-  \draw[thick,-latex,red] (o)-- (j);
-  \draw[thick,-latex,red] (o)-- (e);
-  \draw[line width=.6mm, -latex] (o)--(p);
-  \draw[line width=.6mm, -latex,red] (o)--(q);
-
-  \node[left] at (o) {$O$};
-  \node[right] at (a) {$y$};
-  \node[right] at (b) {$x$};
-  \node[right] at (c) {$z$};
-  \node[left] at (1,1.5) {$\vb*{u}$};
-  \node[right] at (2,1.5) {$\vb*{u}-\Pi_{(i,j)}(\vb*{u})$};
-
-  \node[left] at (i) {$\vb*{i}$};
-  \node[left] at (e) {$\Pi_{\vb*{i}}(\vb*{u})$};
-  \node[above] at (f) {$\Pi_{\vb*{j}}(\vb*{u})$};
-  \node[above] at (j) {$\vb*{j}$};
-
-  \end{tikzpicture}
+\begin{scope}[
+              every node/.style={fill=white,circle},
+              every edge/.style={draw=red,thick}]
+    \path [-] (A) edge (C);
+    \path [-] (A) edge (H);
+    \path [-] (P) edge (C);
+\end{scope}
+\end{tikzpicture}
 
 \end{document}

@@ -1,4 +1,4 @@
-\documentclass[tikz]{standalone}
+\documentclass[tikz,12pt]{standalone}
 
 \usepackage{amsmath,amsthm,amssymb, mathtools,mathrsfs,stmaryrd}
 %\usepackage[framed,amsmath,thmmarks]{ntheorem} lots of error
@@ -106,23 +106,31 @@
 
 \input{pre_commands.tex}
 
+\tikzstyle{block} = [draw=none, thick, text width=.4cm, minimum height=.5cm, align=center, fill=blue!50]  
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
 \begin{document}
-
-
-\begin{tikzpicture}[scale=1]
-  \coordinate (o) at (0,0);
-  \coordinate (a) at (4,0);
-  \coordinate (b) at (2,2);
-  \coordinate (h) at (2,0);
-  \draw[thick,-latex] (o) -- (a) node (xaxis) [right] {$\vb*{u}$};
-  \draw[thick,-latex] (o) -- (b) node (yaxis) [above] {$A$};
-  \pic [draw,black,thick,angle radius=.6cm,"$\theta$"{anchor=west,text = black,font=\footnotesize}, angle eccentricity=1] {angle = a--o--b};
-  \pic [draw,red,thick,angle radius=.3cm,{anchor=west,text = black,font=\footnotesize}, angle eccentricity=1] {right angle = a--h--b};
-  \node[left] at (1.,1.2) {$\vb*{v}$};
-  \node[below] at (o) {$O$};
-  \node[below] at (h) {$H$};
-  \draw[] (b)--(h);
-  \draw[line width=.5mm] (o)--(h);
-  \end{tikzpicture}
+  
+\begin{tikzpicture}[scale=1.0] 
+\def\N{401} % number of points
+% x and y axes
+\draw[thick, ->] (0,0)   -- (12,0)   node[right] {$x$};
+\draw[thick, ->] (0,-2)  -- (0,2.5) node[above] {$y$};
+% plot functions
+\draw[ thick,color=red, -] plot [samples=\N, domain=0:3.6*pi] (\x,{sin(2*\x r)})     
+   node[above left] at (2*pi,1) {$\sin(2x)$};
+%\draw[ thick,color=black, -] plot [samples=\N, domain=0:3.6*pi] (\x,{cos(3\x r)})
+%node[above left] at (pi/2,1) {$\cos(3x)$};
+%\draw[ thick,color=blue, -] plot [samples=\N, domain=0:3.6*pi] (\x,{sin(2\x r)+cos(3\x r)})
+%node[above left] at (2*pi,1) {$\sin(2x)+\cos(3x)$};
+% x tick labels
+\node[below right] at (0, 0)  {$0$};
+\node[below right] at (pi/2, 0)     {$\frac{\pi}{2}$};
+\node[below right] at (pi, 0)       {$\pi$};
+\node[below right] at (3*pi/2, 0)   {$\frac{3\pi}{2}$};
+\node[below right] at (2*pi, 0)   {$2\pi$};
+\node[below right] at (3*pi, 0)   {$3\pi$};
+\node[below right] at (5*pi/2, 0)   {$\frac{5\pi}{2}$};
+\end{tikzpicture}
 
 \end{document}

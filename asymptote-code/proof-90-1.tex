@@ -1,4 +1,4 @@
-\documentclass[tikz]{standalone}
+\documentclass{standalone}
 
 \usepackage{scalefnt}
 \usepackage{amsmath,amsthm,amssymb, mathtools,mathrsfs,stmaryrd}
@@ -8,8 +8,6 @@
 %\usepackage{times}
 % wrapfig and floatflt: text/fig side by side, wrapfig sometimes annoying.
 \usepackage[makeroom]{cancel}
-\usepackage{physics}
-\usepackage{emptypage}
 \usepackage{polynom}
 %\usepackage{floatrow} % table/figure side by side
 %\usepackage{pythontex}
@@ -17,41 +15,25 @@
 %\usepackage{breqn}
 %\usepackage{dsfont}
 %\usepackage[usenames]{color}
-\usepackage[version=4]{mhchem}
 %\usepackage{epsfig}
 %\usepackage{psfrag}
 \let\Bbbk\relax
 \usepackage[subscriptcorrection,slantedGreek,nofontinfo,mtphrd]{mtpro2}
 \usepackage[retainorgcmds]{IEEEtrantools}
-%\usepackage[dvips]{graphicx}
-\usepackage{tabularx}
-\usepackage{booktabs}
-\usepackage[most]{tcolorbox} % boxes with color background
-%\usepackage[mathcal]{eucal}
-\usepackage{setspace}
-\usepackage[font=small,labelfont=md]{caption,subfig}
-\usepackage[square,numbers]{natbib} 
 %\usepackage[authoryear,nonamebreak, sectionbib]{natbib} 
 \usepackage{multirow}
 \usepackage[T1]{fontenc} % typing french
 %\usepackage{fancyheadings}
 \usepackage{imakeidx}       % make index
-\usepackage{fancyhdr}
 %\usepackage[bookmarks=true,colorlinks=true,linkcolor=red,citecolor=blue,backref=page]{hyperref}
 % footmisc must be loaded before hyperref!!!!
-\usepackage[symbol]{footmisc}
 \usepackage[bookmarks=true,colorlinks=true,linkcolor=red,citecolor=blue,backref=page]{hyperref}
 \usepackage{float}         % make new float environment such as boxes (captioned)
-\usepackage{listings}      % insert source code   
-\usepackage{numprint}
 %\usepackage{matlab-prettifier} % insert Matlab
 \newcommand\hmmax{0}
 %\usepackage{bm}
 %\usepackage{algorithmicx}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
 
-\usepackage{siunitx}
 
 \usepackage{witharrows}
 
@@ -59,19 +41,7 @@
 \renewcommand{\rmdefault}{ptm}    % set Times as the default text font
 %\usepackage[textsize=tiny]{todonotes}
 \usepackage{nicefrac} % type inline fractions: \nicefrac{1}{2}
-\usepackage{setspace}
-\usepackage{lineno}  % write numbers for lines
-%\usepackage[mediumspace,mediumqspace,Grey,squaren]{SIunits}
-\usepackage{totcount} % to count the total number of references and other things
-\usepackage[figure,table]{totalcount}
-\usepackage{blkarray, bigstrut} % write complicated matrices with borders, see http://mirror.lagoon.nc/pub/ctan/macros/latex/contrib/blkarray/blkarray.pdf
 
-%\usepackage[norefs,nocites,ignoreunlbld]{refcheck} % warning for unreferred figs/tables/equas
-% search in the .log file for unused fig to detect figures not referred to in the text.
-% clever ref: instead of Fig.~\ref{d}, use \cref{d} or \Cref{d}  capitalise -> Figure 1
-% \crefrange{eq1}{eq5}
-
-%\usepackage[mediumspace,mediumqspace,Grey,squaren]{SIunits}
 \usepackage{setspace}
 \usepackage{makecell}
 
@@ -79,7 +49,7 @@
 \usepackage{tikz,tkz-euclide}
 \usepackage{tikz-3dplot} 
 \usetikzlibrary{angles,quotes, arrows,calc,patterns,decorations.pathmorphing,decorations.pathreplacing,backgrounds,positioning,fit,matrix,math,shapes.geometric,shapes.misc}
-\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt}, cross/.default={1pt}}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt}, cross/.default={1pt}}
 
 % \usepackage{pgfplots}
 %  \pgfplotsset{compat=newest}
@@ -93,11 +63,8 @@
 \usepackage[english]{babel}
 \usepackage{wasysym}
 % for source code font in listing sourcecodepro inconsolata
-\usepackage[scaled=0.84]{beramono}
 \usepackage{varwidth}
-\usepackage[Lenny]{fncychap}
 %\usepackage{perpage}
-\usepackage[scaled=0.84]{beramono} % use this font for code listing
 \usepackage{xpatch} % make boxed bigger
 \usepackage{nicematrix} % write difficult block matrices
 \usepackage{capt-of}
@@ -105,28 +72,85 @@
 \pretocmd{\boxed}{\setlength{\fboxsep}{2.5pt}}{}{} 
 \sloppy
 
+\def\marksep{1pt}
+\def\markwidth{1pt}
+
+% double bar
+\pgfdeclareplotmark{|}
+{%
+  \pgfsetlinewidth{\markwidth}
+  \pgfpathmoveto{\pgfqpoint{\marksep}{\pgfplotmarksize}}
+  \pgfpathlineto{\pgfqpoint{\marksep}{-\pgfplotmarksize}}
+  \pgfpathmoveto{\pgfqpoint{-\marksep}{\pgfplotmarksize}}
+  \pgfpathlineto{\pgfqpoint{-\marksep}{-\pgfplotmarksize}}
+  \pgfusepathqstroke
+}
+
 \input{pre_commands.tex}
 
 \begin{document}
 
 
-\begin{tikzpicture}[scale=1]
-\scalefont{0.7}
+\begin{tikzpicture}[]
+\scalefont{1.9}
+%\tikzstyle{every node}=[font=\small]
+
+  \draw[thick,line width=0.6mm] (0,0) circle[radius=4];
+
   \coordinate (o) at (0,0);
-  \coordinate (a) at (4,0);
-  \coordinate (b) at (2,2);
-  \coordinate (h) at (2,0);
-  \draw[thick,-latex] (o) -- (a) node (xaxis) [right] {$\vb*{v}$};
-  \draw[thick,-latex] (o) -- (b) node (yaxis) [above] {$A$};
-  \pic [draw,black,thick,angle radius=.6cm,"$\theta$"{anchor=west,text = black,font=\footnotesize}, angle eccentricity=1] {angle = a--o--b};
-  \pic [draw,red,thick,angle radius=.3cm,{anchor=west,text = black,font=\footnotesize}, angle eccentricity=1] {right angle = a--h--b};
-  \node[left] at (1.,1.2) {$\vb*{u}$};
+  \coordinate (a) at (-4,0);
+  \coordinate (b) at (4,0);
+  \coordinate (c1) at (45:4);
+  \coordinate (c2) at (130:4);
+
+  \draw[thick,line width=0.6mm] (a) -- (b);
+  \draw[thick,line width=0.6mm] (b) -- (c1) -- (a);
+  \draw[thick,line width=0.6mm] (b) -- (c2) -- (a);
+  \draw[fill=black] (0,0) circle[radius=0.1];
+
+  \pic [draw,black,thick,angle radius=.4cm,{anchor=west,text = black}, angle eccentricity=1] {right angle = b--c1--a};
+  \pic [draw,black,thick,angle radius=.4cm,{anchor=west,text = black}, angle eccentricity=1] {right angle = b--c2--a};
+
   \node[below] at (o) {$O$};
-  \node[below] at (h) {$H$};
-  \node[below] at (1,0) {$\Pi_{\vb*{v}}(\vb*{u})$};
-  \node[right] at (2,1) {$\vb*{u}-\Pi_{\vb*{v}}(\vb*{u}) \perp \vb*{v}$};
-  \draw[] (b)--(h);
-  \draw[line width=.5mm] (o)--(h);
+  \node[left] at (a) {$A$};
+  \node[right] at (b) {$B$};
+  \node[right] at (c1) {$C$};
+  
+  %\begin{scope}[shift={(2.5,0)}]
+
+    \coordinate (o2) at (10,0);
+    \coordinate (a2) at (10-4,0);
+    \coordinate (b2) at (10+4,0);
+    \coordinate (d2) at (10-2,3.464101615137755);
+
+    \node[below] at (o2) {$O$};
+    \node[left] at (a2) {$A$};
+    \node[right] at (b2) {$B$};
+    \node[above] at (d2) {$C$};
+
+    \draw[thick, line width=0.6mm] (o2) circle[radius=4];
+    \draw[thick,line width=0.6mm] (a2) -- (b2);
+    \draw[thick,line width=0.6mm] (o2) -- (d2);
+    \draw[thick,line width=0.6mm] (a2) -- (d2);
+    \draw[thick,line width=0.6mm] (b2) -- (d2);
+    \draw[fill=black] (o2) circle[radius=0.1];
+
+    \node[below] at (o2) {$O$};
+
+    \tkzMarkAngle[arc=ll,thick](o2,a2,d2)
+    \tkzLabelAngle[pos=1.4,font=\scriptsize](o2,a2,d2){\Large $\beta$}
+    \tkzLabelAngle[pos=1.4,font=\scriptsize](a2,d2,o2){\Large $\beta$}
+    \tkzMarkAngle[arc=ll,thick](a2,d2,o2)
+    \tkzMarkAngle[mark,size=1.5cm,thick](o2,d2,b2)
+    \tkzLabelAngle[pos=1.7,](o2,d2,b2){\Large $\alpha$}
+    \tkzLabelAngle[pos=1.7,](d2,b2,o2){\Large $\alpha$}
+    \tkzMarkAngle[mark,size=1.5cm,thick](d2,b2,o2)
+
+    \tkzMarkSegment[mark=|,size=3](o2,a2)
+    \tkzMarkSegment[mark=|,size=3](o2,d2)
+    \tkzMarkSegment[mark=|,size=3](o2,b2)
+  %\end{scope}
+
   \end{tikzpicture}
 
 \end{document}
