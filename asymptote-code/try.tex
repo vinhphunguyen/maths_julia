@@ -111,26 +111,30 @@
 
 \begin{document}
   
-\begin{tikzpicture}[scale=1.0] 
-\def\N{401} % number of points
-% x and y axes
-\draw[thick, ->] (0,0)   -- (12,0)   node[right] {$x$};
-\draw[thick, ->] (0,-2)  -- (0,2.5) node[above] {$y$};
-% plot functions
-\draw[ thick,color=red, -] plot [samples=\N, domain=0:3.6*pi] (\x,{sin(2*\x r)})     
-   node[above left] at (2*pi,1) {$\sin(2x)$};
-%\draw[ thick,color=black, -] plot [samples=\N, domain=0:3.6*pi] (\x,{cos(3\x r)})
-%node[above left] at (pi/2,1) {$\cos(3x)$};
-%\draw[ thick,color=blue, -] plot [samples=\N, domain=0:3.6*pi] (\x,{sin(2\x r)+cos(3\x r)})
-%node[above left] at (2*pi,1) {$\sin(2x)+\cos(3x)$};
-% x tick labels
-\node[below right] at (0, 0)  {$0$};
-\node[below right] at (pi/2, 0)     {$\frac{\pi}{2}$};
-\node[below right] at (pi, 0)       {$\pi$};
-\node[below right] at (3*pi/2, 0)   {$\frac{3\pi}{2}$};
-\node[below right] at (2*pi, 0)   {$2\pi$};
-\node[below right] at (3*pi, 0)   {$3\pi$};
-\node[below right] at (5*pi/2, 0)   {$\frac{5\pi}{2}$};
+\begin{tikzpicture}[thick,yscale=0.8]
+
+% Axes
+\draw[-latex,name path=xaxis] (-1,0) -- (12,0) node[above]{\large $x$};
+\draw[-latex] (0,-2) -- (0,8)node[right]{\large $y$};;
+
+% Function plot
+\draw[ultra thick, orange,name path=function]  plot[smooth,domain=1:9.5] (\x, {0.1*\x^2-1.5}) node[left]{$F(x)$};
+
+
+
+% plot tangent line
+\node[violet,right=0.2cm] at (8,4.9) {\large tangent};
+
+\draw[gray,thin,dotted] (8,0) -- (8,4.9) node[circle,fill,inner sep=2pt]{};
+\draw[dashed, violet,name path=Tfunction]  plot[smooth,domain=4.25:9.5] (\x, {1.6*\x-7.9});
+
+
+
+% x-axis labels
+\draw (8,0.1) -- (8,-0.1) node[below] {$x^{(k)}$};
+\draw [name intersections={of=Tfunction and xaxis}] ($(intersection-1)+(0,0.1)$) -- ++(0,-0.2) node[below,fill=white] {$x^{(k+1)}$} ;
+
+
 \end{tikzpicture}
 
 \end{document}

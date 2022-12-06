@@ -1,0 +1,51 @@
+\documentclass{standalone}
+
+\usepackage{pgfplots}
+\usepackage[outline]{contour} % glow around text
+
+\usepgfplotslibrary{polar}
+\pgfplotsset{compat=1.10}
+
+\pgfplotsset{mypolarplot/.style={%
+  clip=false, % needed for double line (last \addplot command)
+  domain=0:360, % plot full cycle
+  %samples=180, % number of samples; can be locally adjusted
+  grid=both, % display major and minor grids
+  major grid style={black}, 
+  minor x tick num=3, % 3 minor x ticks between majors
+  minor y tick num=1, % 1 minor y tick between majors
+  xtick={0,45,...,359},
+  xticklabels={%
+    $0$,
+    $\frac{ \pi}{4}$,
+    $\frac{ \pi}{2}$,
+    $\frac{3\pi}{4}$,
+    $\pi$,
+    $\frac{5\pi}{4}$,
+    $\frac{3\pi}{2}$,
+    $\frac{7\pi}{4}$
+  },
+  yticklabel style={anchor=north west,xshift=-0.5ex,yshift=0.5ex}
+}}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{polaraxis}[%
+  ymax=4,
+  ytick={0,1,2,3,4},
+  mypolarplot
+]
+  \addplot[red,mark=*,domain=45:45.01] {2};
+  %\addplot[mark=none,thick,red!70!black,domain=0:10*pi,samples=1000,data cs = polarrad] {x+2*sin(2*pi*x)};
+  \addplot[black] {4.05}; % there is likely a better way to do this
+\end{polaraxis}
+\begin{scope}[xshift=4] %inter
+ \draw[->]
+    (-2,0) -- (2,0)
+    node[right] {$x$};
+  \draw[->]
+    (0,-1) -- (0,2)
+    node[left] {$y$};
+\end{scope}
+\end{tikzpicture}
+\end{document}

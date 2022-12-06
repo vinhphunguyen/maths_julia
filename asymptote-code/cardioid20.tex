@@ -126,7 +126,7 @@
   \pgfmathsetmacro{\rad}{2.4} % radius of the circle
   \pgfmathsetmacro{\radd}{2.8} % radius of the circle
   \pgfmathsetmacro{\rr}{0.05} % radius of the dots (points)
-  \pgfmathsetmacro{\num}{2} % time table of num
+  \pgfmathsetmacro{\num}{2.5} % time table of num
 
   \draw [thick] (0,0) circle (\rad);
     % loop over 0, as, 2as, ..., 360
@@ -134,18 +134,18 @@
   \foreach \x [count=\i from 0] in {0,\as,...,\ea}{
     %\pgfmathsetmacro{\td}{int(\i+1)}
     \coordinate (\i) at (\x:\rad) {};
-    \node[] at (\x:\radd) {\i};
+    %\node[] at (\x:\radd) {\i};
   }
  
   \foreach \x in {0,1,2,...,\rnp}{
-    \pgfmathsetmacro{\nx}{mod(2*\x,\np)} %thefis=1
+    \pgfmathsetmacro{\nx}{mod(\num*\x,\np)} %thefis=1
     %\stepcounter{fis}
     \draw[black] (\x) -- (\nx);
   } 
 
-  \foreach \i in {0,1,...,\rnp}{
-      \draw[black,fill=black] (\i) circle (\rr);
-  }
+  % \foreach \i in {0,1,...,\rnp}{
+  %     \draw[black,fill=black] (\i) circle (\rr);
+  % }
 \end{tikzpicture}
 
 
