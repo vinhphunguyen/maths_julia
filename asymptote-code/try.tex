@@ -1,140 +1,87 @@
-\documentclass[tikz,12pt]{standalone}
+\documentclass{standalone} 
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings}
 
-\usepackage{amsmath,amsthm,amssymb, mathtools,mathrsfs,stmaryrd}
-%\usepackage[framed,amsmath,thmmarks]{ntheorem} lots of error
-%\usepackage{latexsym}
-\usepackage{empheq}
-%\usepackage{times}
-% wrapfig and floatflt: text/fig side by side, wrapfig sometimes annoying.
-\usepackage[makeroom]{cancel}
-\usepackage{physics}
-\usepackage{emptypage}
-\usepackage{polynom}
-%\usepackage{floatrow} % table/figure side by side
-%\usepackage{pythontex}
-\usepackage{etoolbox}
-%\usepackage{breqn}
-%\usepackage{dsfont}
-%\usepackage[usenames]{color}
-\usepackage[version=4]{mhchem}
-%\usepackage{epsfig}
-%\usepackage{psfrag}
-\let\Bbbk\relax
-\usepackage[subscriptcorrection,slantedGreek,nofontinfo,mtphrd]{mtpro2}
-\usepackage[retainorgcmds]{IEEEtrantools}
-%\usepackage[dvips]{graphicx}
-\usepackage{tabularx}
-\usepackage{booktabs}
-\usepackage[most]{tcolorbox} % boxes with color background
-%\usepackage[mathcal]{eucal}
-\usepackage{setspace}
-\usepackage[font=small,labelfont=md]{caption,subfig}
-\usepackage[square,numbers]{natbib} 
-%\usepackage[authoryear,nonamebreak, sectionbib]{natbib} 
-\usepackage{multirow}
-\usepackage[T1]{fontenc} % typing french
-%\usepackage{fancyheadings}
-\usepackage{imakeidx}       % make index
-\usepackage{fancyhdr}
-%\usepackage[bookmarks=true,colorlinks=true,linkcolor=red,citecolor=blue,backref=page]{hyperref}
-% footmisc must be loaded before hyperref!!!!
-\usepackage[symbol]{footmisc}
-\usepackage[bookmarks=true,colorlinks=true,linkcolor=red,citecolor=blue,backref=page]{hyperref}
-\usepackage{float}         % make new float environment such as boxes (captioned)
-\usepackage{listings}      % insert source code   
-\usepackage{numprint}
-%\usepackage{matlab-prettifier} % insert Matlab
-\newcommand\hmmax{0}
-%\usepackage{bm}
-%\usepackage{algorithmicx}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-
-\usepackage{siunitx}
-
-\usepackage{witharrows}
-
-%\usepackage{diffcoeff} % for derivatives
-\renewcommand{\rmdefault}{ptm}    % set Times as the default text font
-%\usepackage[textsize=tiny]{todonotes}
-\usepackage{nicefrac} % type inline fractions: \nicefrac{1}{2}
-\usepackage{setspace}
-\usepackage{lineno}  % write numbers for lines
-%\usepackage[mediumspace,mediumqspace,Grey,squaren]{SIunits}
-\usepackage{totcount} % to count the total number of references and other things
-\usepackage[figure,table]{totalcount}
-\usepackage{blkarray, bigstrut} % write complicated matrices with borders, see http://mirror.lagoon.nc/pub/ctan/macros/latex/contrib/blkarray/blkarray.pdf
-
-%\usepackage[norefs,nocites,ignoreunlbld]{refcheck} % warning for unreferred figs/tables/equas
-% search in the .log file for unused fig to detect figures not referred to in the text.
-% clever ref: instead of Fig.~\ref{d}, use \cref{d} or \Cref{d}  capitalise -> Figure 1
-% \crefrange{eq1}{eq5}
-
-%\usepackage[mediumspace,mediumqspace,Grey,squaren]{SIunits}
-\usepackage{setspace}
-\usepackage{makecell}
-
-\usepackage{anyfontsize}
-\usepackage{tikz,tkz-euclide}
-\usepackage{tikz-3dplot} 
-\usetikzlibrary{angles,quotes, arrows,calc,patterns,decorations.pathmorphing,decorations.pathreplacing,backgrounds,positioning,fit,matrix,math,shapes.geometric,shapes.misc}
-\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt}, cross/.default={1pt}}
-
-% \usepackage{pgfplots}
-%  \pgfplotsset{compat=newest}
-%  %% the following commands are needed for some matlab2tikz features
-%  \usetikzlibrary{plotmarks}
-%  \usetikzlibrary{arrows.meta}
-%  \usepgfplotslibrary{patchplots}
- \usepackage{grffile}
-\usepackage{gensymb} % for degree symbol
-%\usepackage{underscore}
-\usepackage[english]{babel}
-\usepackage{wasysym}
-% for source code font in listing sourcecodepro inconsolata
-\usepackage[scaled=0.84]{beramono}
-\usepackage{varwidth}
-\usepackage[Lenny]{fncychap}
-%\usepackage{perpage}
-\usepackage[scaled=0.84]{beramono} % use this font for code listing
-\usepackage{xpatch} % make boxed bigger
-\usepackage{nicematrix} % write difficult block matrices
-\usepackage{capt-of}
-% larger box around \boxed{}
-\pretocmd{\boxed}{\setlength{\fboxsep}{2.5pt}}{}{} 
-\sloppy
-
-\input{pre_commands.tex}
-
-\tikzstyle{block} = [draw=none, thick, text width=.4cm, minimum height=.5cm, align=center, fill=blue!50]  
-\tikzstyle{arrow} = [thick,->,>=stealth]
+% Declare nice sphere shading: http://tex.stackexchange.com/a/54239/12440
+\pgfdeclareradialshading[tikz@ball]{ball}{\pgfqpoint{0bp}{0bp}}{%
+ color(0bp)=(tikz@ball!0!white);
+ color(7bp)=(tikz@ball!0!white);
+ color(15bp)=(tikz@ball!70!black);
+ color(20bp)=(black!70);
+ color(30bp)=(black!90)}
+\makeatother
 
 \begin{document}
-  
-\begin{tikzpicture}[thick,yscale=0.8]
+\begin{tikzpicture}[xscale=2]
 
-% Axes
-\draw[-latex,name path=xaxis] (-1,0) -- (12,0) node[above]{\large $x$};
-\draw[-latex] (0,-2) -- (0,8)node[right]{\large $y$};;
+\pgfmathsetmacro\startx{0.5};
+\pgfmathsetmacro\endx{2.2};
+\pgfmathsetmacro\domw{\endx-\startx};
+\pgfmathsetmacro\cyln{6};   % number of disks
+\pgfmathsetmacro\cylw{\domw/\cyln};  % width of disks
+\pgfmathsetmacro\smoothn{60};   % number of disks in "smooth" volume
+\pgfmathsetmacro\smoothw{\domw/\smoothn};
 
-% Function plot
-\draw[ultra thick, orange,name path=function]  plot[smooth,domain=1:9.5] (\x, {0.1*\x^2-1.5}) node[left]{$F(x)$};
 
-
-
-% plot tangent line
-\node[violet,right=0.2cm] at (8,4.9) {\large tangent};
-
-\draw[gray,thin,dotted] (8,0) -- (8,4.9) node[circle,fill,inner sep=2pt]{};
-\draw[dashed, violet,name path=Tfunction]  plot[smooth,domain=4.25:9.5] (\x, {1.6*\x-7.9});
+\pgfmathsetmacro\starty{-0.4*\startx*\startx*\startx+0.5*\startx*\startx+3}
+\pgfmathsetmacro\startby{1.47941 - 0.558824*\startx}
+\pgfmathsetmacro\endy{-0.4*\endx*\endx*\endx+0.5*\endx*\endx+3};
+\pgfmathsetmacro\endby{1.47941 - 0.558824*\endx};
 
 
 
-% x-axis labels
-\draw (8,0.1) -- (8,-0.1) node[below] {$x^{(k)}$};
-\draw [name intersections={of=Tfunction and xaxis}] ($(intersection-1)+(0,0.1)$) -- ++(0,-0.2) node[below,fill=white] {$x^{(k+1)}$} ;
+\begin{scope}[]
+
+\draw[fill=cyan] (\startx,\starty) to[out=315, in=45,looseness=0.3] (\startx,-\starty-2) to[out=135, in=225,looseness=0.3] (\startx,\starty);
+
+\draw[black, very thin] (0,0) -- (\startx,0);
+\draw[black, very thin] (\startx,0)--(\startx,-0.2);
+\node[below] at (\startx,-0.2) {$a$};
+
+\draw[dashed,blue,thick] (0,-1)--(3,-1);
+
+% inner tube
+\foreach \i [count=\int] in {\cyln,...,0} {
+  \pgfmathsetmacro\tx{\startx+\i*\cylw};    % startx of shell
+  \pgfmathsetmacro\ty{-0.4*\tx*\tx*\tx+0.5*\tx*\tx+3};
+  \pgfmathsetmacro\by{1.47941 - 0.558824*\tx};
+
+  \fill[cyan,draw=gray,thin] (\tx,\by)--(\tx+\cylw,\by) to[out=225, in=135,looseness=0.3] (\tx+\cylw,-1*\by-2)--(\tx,-1*\by-2) to[out=135, in=225,looseness=0.3] (\tx,\by);
+  \begin{scope}
+      \clip (\tx,\by)--(\tx+\cylw,\by) to[out=225, in=135,looseness=0.3] (\tx+\cylw,-1*\by-2)--(\tx,-1*\by-2) to[out=135, in=225,looseness=0.3] (\tx,\by);
+      \begin{scope} 
+          \shade [ball color=white, opacity=0.7] (\tx,-1) circle (1.3*\by+1);
+      \end{scope}
+  \end{scope}
+
+  \fill[cyan,draw=gray,thin](\tx,\ty)--(\tx+\cylw,\ty) to[out=315, in=45,looseness=0.3] (\tx+\cylw,-1*\ty-2)--(\tx,-1*\ty-2) to[out=45, in=315,looseness=0.3] (\tx,\ty);
+
+  \begin{scope}
+        \clip (\tx,\ty)--(\tx+\cylw,\ty) to[out=315, in=45,looseness=0.3] (\tx+\cylw,-1*\ty-2)--(\tx,-1*\ty-2) to[out=45, in=315,looseness=0.3] (\tx,\ty);
+        \begin{scope} 
+            \shade [ball color=white, opacity=0.7] (\tx,-1) circle (1.3*\ty+1);
+        \end{scope}
+    \end{scope}
+}
+
+% \draw[black, very thin] (0,0) -- (\startx+0.3,0);
+% \draw[black, very thin] (\startx,0)--(\startx,-0.2);
+% \node[below] at (\startx,-0.2) {$a$};
+
+\draw[dashed,blue,thick] (0,-1)--(\startx+0.3,-1);
+%\node[left,blue] at (0,-1) {$-1$};
+
+\fill[cyan] (\startx,\starty) to[out=315, in=45,looseness=0.3] (\startx,-\starty-2) --(\startx,-\startby-2) to[out=45, in=315,looseness=0.3] (\startx,\startby)--(\startx,\starty);
+
+% \draw[thick,purple] (\startx,\starty)--(\startx-0.2,\starty)--(\startx-0.2,-1)--(\startx,-1);
+% \draw[thick,purple] (\startx-0.2,\startby+0.5*\starty-0.5*\startby)--(\startx-0.4,\startby+0.5*\starty-0.5*\startby);
+% \node[left,text width=3cm, align=right,purple] at (\startx-0.6,\startby+0.5*\starty-0.5*\startby) {Outer radius\\ $f(x)+1$};
+
+% \draw[thick,orange] (\startx,\startby)--(\startx-0.4,\startby)--(\startx-0.4,-1)--(\startx,-1);
+% \draw[thick,orange] (\startx-0.4, 0.5*\startby)--(\startx-0.6,0.5*\startby);
+% \node[left,text width=3cm, align=right,orange] at (\startx-0.6,0.5*\startby) {Inner radius $g(x)+1$};
+\end{scope}
 
 
 \end{tikzpicture}
-
 \end{document}
