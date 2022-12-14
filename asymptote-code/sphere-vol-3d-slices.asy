@@ -3,6 +3,8 @@ import solids;
 settings.render=0;
 settings.prc=false;
 
+defaultrender.merge=true;
+
 size(12cm,0);
 settings.outformat="pdf"; // output is pdf
 currentprojection = orthographic(20,30,10);
@@ -44,10 +46,11 @@ for(int i=0;i < n;++i)
 l=l--(0,0,h1);
 revolution sur=revolution(O,l,Z,0,360);
 draw(surface(sur), mediumgray+opacity(.6), meshpen=gray, light=White);
+//draw(sur.silhouette(),black+1pt);
 
 
-//draw(cc.silhouette(),black+1pt);
-draw(surface(cc), blue, meshpen=gray, nolight);
+draw(cc.silhouette(),black+1pt);
+//draw(surface(cc), blue, meshpen=gray, nolight);
 
 //dot(A,red+4pt);
 //dot(O,blue+4pt);
