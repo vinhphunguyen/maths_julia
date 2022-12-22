@@ -25,7 +25,7 @@ pair m_pos=F(0.5); // location of the mass m
 dot(O,black+5pt); // plot a dot at (0,0) 
 dot("$m$",align=SE,m_pos,black+5pt);
 draw(Label("$mg$",align=E,EndPoint),m_pos--m_pos+.15dir(-90),Arrow);  // draw the force
-draw("$\alpha$",arc(O,0.125,0,theta),Arrow,PenMargins);
+
 
 Label L1=Label("$y(t)$",align=O,MidPoint,Fill(white));
 Label L2=Label("$x(t)$",align=O,MidPoint,Fill(white));

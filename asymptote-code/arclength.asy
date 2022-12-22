@@ -2,7 +2,7 @@ import graph;
 import geometry;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 

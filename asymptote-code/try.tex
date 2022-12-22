@@ -1,87 +1,46 @@
-\documentclass{standalone} 
+\documentclass{standalone}
 \usepackage{tikz}
-\usetikzlibrary{decorations.markings}
 
-% Declare nice sphere shading: http://tex.stackexchange.com/a/54239/12440
-\pgfdeclareradialshading[tikz@ball]{ball}{\pgfqpoint{0bp}{0bp}}{%
- color(0bp)=(tikz@ball!0!white);
- color(7bp)=(tikz@ball!0!white);
- color(15bp)=(tikz@ball!70!black);
- color(20bp)=(black!70);
- color(30bp)=(black!90)}
-\makeatother
 
 \begin{document}
-\begin{tikzpicture}[xscale=2]
-
-\pgfmathsetmacro\startx{0.5};
-\pgfmathsetmacro\endx{2.2};
-\pgfmathsetmacro\domw{\endx-\startx};
-\pgfmathsetmacro\cyln{6};   % number of disks
-\pgfmathsetmacro\cylw{\domw/\cyln};  % width of disks
-\pgfmathsetmacro\smoothn{60};   % number of disks in "smooth" volume
-\pgfmathsetmacro\smoothw{\domw/\smoothn};
+\begin{tikzpicture} 
+    \def \minx {-5}
+    \def \maxx {8}
+    \def \miny {-5}
+    \def \maxy {5}
 
 
-\pgfmathsetmacro\starty{-0.4*\startx*\startx*\startx+0.5*\startx*\startx+3}
-\pgfmathsetmacro\startby{1.47941 - 0.558824*\startx}
-\pgfmathsetmacro\endy{-0.4*\endx*\endx*\endx+0.5*\endx*\endx+3};
-\pgfmathsetmacro\endby{1.47941 - 0.558824*\endx};
+    \draw[black!15, line width=0.05pt,  step=0.2] (\minx,\miny) grid (\maxx,\maxy);
+    \draw[black!25, line width=1.3pt, step=1] (\minx,\miny) grid (\maxx,\maxy);
 
 
+    \draw[thick, ->] (\minx-0.3,0)--(\maxx+0.3,0);
+    \draw[thick, ->] (0,\miny-0.3)--(0,\maxy+0.3);
+    \node at (\maxx+0.5,0) {$x$};
+    \node at (0,\maxy+0.5) {$y$};
+    % labels for x/y axis
+    \foreach \x in {\minx,...,-1}
+     \node[below,black] at (\x,0) {$\x$};
+    \foreach \x in {1,2,...,\maxx}
+     \node[below,black] at (\x,0) {$\x$};
+    \foreach \y in {\miny,...,-1}
+     \node[left,black] at (0,\y) {$\y$};
+    \foreach \y in {1,2,...,\maxy}
+     \node[left,black] at (0,\y) {$\y$};
+    \node[below left,black] at (0,0) {$0$};
+    % plot functions
+    \draw[very thick, domain=-5:-3.2, smooth,variable=\x]  plot ({\x},{1/(\x+3)}); %1/(x+3) two branches
+    \draw[very thick, domain=-2.8:-1, smooth,variable=\x]  plot ({\x},{1/(\x+3)});
+    \draw[very thick, domain=-1:0, smooth,variable=\x]  plot ({\x},{2.5*\x+3});
+    \draw[very thick, domain=0:2, smooth,variable=\x]  plot ({\x},{\x*\x - 2});
+    \draw[very thick, domain=2:3, smooth,variable=\x]  plot ({\x},{(\x-4)*(\x-4) - 2});
+    \draw[very thick, domain=3:8, smooth,variable=\x]  plot ({\x},{1/(\x-2)});
 
-\begin{scope}[]
-
-\draw[fill=cyan] (\startx,\starty) to[out=315, in=45,looseness=0.3] (\startx,-\starty-2) to[out=135, in=225,looseness=0.3] (\startx,\starty);
-
-\draw[black, very thin] (0,0) -- (\startx,0);
-\draw[black, very thin] (\startx,0)--(\startx,-0.2);
-\node[below] at (\startx,-0.2) {$a$};
-
-\draw[dashed,blue,thick] (0,-1)--(3,-1);
-
-% inner tube
-\foreach \i [count=\int] in {\cyln,...,0} {
-  \pgfmathsetmacro\tx{\startx+\i*\cylw};    % startx of shell
-  \pgfmathsetmacro\ty{-0.4*\tx*\tx*\tx+0.5*\tx*\tx+3};
-  \pgfmathsetmacro\by{1.47941 - 0.558824*\tx};
-
-  \fill[cyan,draw=gray,thin] (\tx,\by)--(\tx+\cylw,\by) to[out=225, in=135,looseness=0.3] (\tx+\cylw,-1*\by-2)--(\tx,-1*\by-2) to[out=135, in=225,looseness=0.3] (\tx,\by);
-  \begin{scope}
-      \clip (\tx,\by)--(\tx+\cylw,\by) to[out=225, in=135,looseness=0.3] (\tx+\cylw,-1*\by-2)--(\tx,-1*\by-2) to[out=135, in=225,looseness=0.3] (\tx,\by);
-      \begin{scope} 
-          \shade [ball color=white, opacity=0.7] (\tx,-1) circle (1.3*\by+1);
-      \end{scope}
-  \end{scope}
-
-  \fill[cyan,draw=gray,thin](\tx,\ty)--(\tx+\cylw,\ty) to[out=315, in=45,looseness=0.3] (\tx+\cylw,-1*\ty-2)--(\tx,-1*\ty-2) to[out=45, in=315,looseness=0.3] (\tx,\ty);
-
-  \begin{scope}
-        \clip (\tx,\ty)--(\tx+\cylw,\ty) to[out=315, in=45,looseness=0.3] (\tx+\cylw,-1*\ty-2)--(\tx,-1*\ty-2) to[out=45, in=315,looseness=0.3] (\tx,\ty);
-        \begin{scope} 
-            \shade [ball color=white, opacity=0.7] (\tx,-1) circle (1.3*\ty+1);
-        \end{scope}
-    \end{scope}
-}
-
-% \draw[black, very thin] (0,0) -- (\startx+0.3,0);
-% \draw[black, very thin] (\startx,0)--(\startx,-0.2);
-% \node[below] at (\startx,-0.2) {$a$};
-
-\draw[dashed,blue,thick] (0,-1)--(\startx+0.3,-1);
-%\node[left,blue] at (0,-1) {$-1$};
-
-\fill[cyan] (\startx,\starty) to[out=315, in=45,looseness=0.3] (\startx,-\starty-2) --(\startx,-\startby-2) to[out=45, in=315,looseness=0.3] (\startx,\startby)--(\startx,\starty);
-
-% \draw[thick,purple] (\startx,\starty)--(\startx-0.2,\starty)--(\startx-0.2,-1)--(\startx,-1);
-% \draw[thick,purple] (\startx-0.2,\startby+0.5*\starty-0.5*\startby)--(\startx-0.4,\startby+0.5*\starty-0.5*\startby);
-% \node[left,text width=3cm, align=right,purple] at (\startx-0.6,\startby+0.5*\starty-0.5*\startby) {Outer radius\\ $f(x)+1$};
-
-% \draw[thick,orange] (\startx,\startby)--(\startx-0.4,\startby)--(\startx-0.4,-1)--(\startx,-1);
-% \draw[thick,orange] (\startx-0.4, 0.5*\startby)--(\startx-0.6,0.5*\startby);
-% \node[left,text width=3cm, align=right,orange] at (\startx-0.6,0.5*\startby) {Inner radius $g(x)+1$};
-\end{scope}
-
-
+    \draw [very thick,fill=white] (0,3) circle [radius=0.1];
+    \draw [very thick,fill=white] (3,1) circle [radius=0.1];
+    \draw [very thick,fill=white] (-1,.5) circle [radius=0.1];
+    \draw [fill] (0,-2) circle [radius=0.1];
+    \draw [fill] (3,-1) circle [radius=0.1];
+    \draw [fill] (-3,2) circle [radius=0.1];
 \end{tikzpicture}
 \end{document}

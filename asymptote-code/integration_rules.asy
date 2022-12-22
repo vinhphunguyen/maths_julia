@@ -3,11 +3,13 @@ import geometry;
 import gsl;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
-defaultpen(fontsize(6pt));
+size(12cm, keepAspect=true);
+
+defaultpen(fontsize(12pt));
 
 pair Bezier(pair P[], real t)
 { // https://tex.stackexchange.com/a/554290/236162
@@ -19,7 +21,6 @@ pair Bezier(pair P[], real t)
   return Bezi;
 }
 
-unitsize(1cm);
 
 picture pic1, pic2;
 
