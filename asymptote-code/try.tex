@@ -3,44 +3,39 @@
 
 
 \begin{document}
-\begin{tikzpicture} 
-    \def \minx {-5}
-    \def \maxx {8}
-    \def \miny {-5}
-    \def \maxy {5}
 
-
-    \draw[black!15, line width=0.05pt,  step=0.2] (\minx,\miny) grid (\maxx,\maxy);
-    \draw[black!25, line width=1.3pt, step=1] (\minx,\miny) grid (\maxx,\maxy);
-
-
-    \draw[thick, ->] (\minx-0.3,0)--(\maxx+0.3,0);
-    \draw[thick, ->] (0,\miny-0.3)--(0,\maxy+0.3);
-    \node at (\maxx+0.5,0) {$x$};
-    \node at (0,\maxy+0.5) {$y$};
-    % labels for x/y axis
-    \foreach \x in {\minx,...,-1}
-     \node[below,black] at (\x,0) {$\x$};
-    \foreach \x in {1,2,...,\maxx}
-     \node[below,black] at (\x,0) {$\x$};
-    \foreach \y in {\miny,...,-1}
-     \node[left,black] at (0,\y) {$\y$};
-    \foreach \y in {1,2,...,\maxy}
-     \node[left,black] at (0,\y) {$\y$};
-    \node[below left,black] at (0,0) {$0$};
-    % plot functions
-    \draw[very thick, domain=-5:-3.2, smooth,variable=\x]  plot ({\x},{1/(\x+3)}); %1/(x+3) two branches
-    \draw[very thick, domain=-2.8:-1, smooth,variable=\x]  plot ({\x},{1/(\x+3)});
-    \draw[very thick, domain=-1:0, smooth,variable=\x]  plot ({\x},{2.5*\x+3});
-    \draw[very thick, domain=0:2, smooth,variable=\x]  plot ({\x},{\x*\x - 2});
-    \draw[very thick, domain=2:3, smooth,variable=\x]  plot ({\x},{(\x-4)*(\x-4) - 2});
-    \draw[very thick, domain=3:8, smooth,variable=\x]  plot ({\x},{1/(\x-2)});
-
-    \draw [very thick,fill=white] (0,3) circle [radius=0.1];
-    \draw [very thick,fill=white] (3,1) circle [radius=0.1];
-    \draw [very thick,fill=white] (-1,.5) circle [radius=0.1];
-    \draw [fill] (0,-2) circle [radius=0.1];
-    \draw [fill] (3,-1) circle [radius=0.1];
-    \draw [fill] (-3,2) circle [radius=0.1];
+  \begin{tikzpicture}[xscale=1.2,yscale=1.]
+  % limits
+  \def\xa{ -0.2}
+  \def\xb{pi+0.4}
+  \def\ya{-.2}
+  \def\yb{ 1.2}
+  \def\N{150} % number of points
+  % axes & grid
+  \draw[->,thick]
+    (\xa,0) -- (\xb,0)
+    node[right] {$x$};
+  \draw[->,thick]
+    (0,\ya) -- (0,\yb)
+    node[left] {$y$};
+  % functions
+  \draw (0,0.70710678) -- (pi,0.70710678);
+  \draw (pi/4,0.70710678) -- (pi/4,0.);
+  \draw (3*pi/4,0.70710678) -- (3*pi/4,0.);
+  \draw[fill=blue] (pi/4,0) circle (.03cm);
+  \draw[fill=blue] (3*pi/4,0) circle (.03cm);
+  \draw[thick,color=blue,samples=\N,domain=\xa:\xb] % SIN
+    plot(\x,{sin(\x r)}) % r for radians
+    node[above right] at (pi/2-0.7,1) {$\sin(x)$};
+  % ticks
+  \draw[] % x \contour{white}{$\x^\circ$}};
+    node[below right,scale=0.9] at (     0, 0) {0}
+    node[below,scale=0.9] at (  pi/2, 0) {$\nicefrac{\pi}{2}$}
+    node[below,scale=0.9] at (  pi/4, 0) {$x_1$}
+    node[below,scale=0.9] at (  3*pi/4, 0) {$x_2$}
+    node[below,scale=0.9] at (  pi,   0) {\contour{white}{$\pi$}};
+  \draw[] % y
+    node[left,scale=0.9] at ( 0, 0.70710678) {$y$};    
 \end{tikzpicture}
+
 \end{document}

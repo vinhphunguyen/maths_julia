@@ -1,8 +1,6 @@
 import solids;
 import graph3;
 
-
-
 settings.outformat="pdf";
 //settings.render = 0;
 
