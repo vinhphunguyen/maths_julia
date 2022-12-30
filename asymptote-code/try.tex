@@ -1,41 +1,22 @@
-\documentclass{standalone}
+\documentclass{article}
 \usepackage{tikz}
-
+\usepackage{amsmath,amsthm,amssymb, mathtools,mathrsfs,stmaryrd,titletoc}
+\usepackage{IEEEtrantools}
 
 \begin{document}
 
-  \begin{tikzpicture}[xscale=1.2,yscale=1.]
-  % limits
-  \def\xa{ -0.2}
-  \def\xb{pi+0.4}
-  \def\ya{-.2}
-  \def\yb{ 1.2}
-  \def\N{150} % number of points
-  % axes & grid
-  \draw[->,thick]
-    (\xa,0) -- (\xb,0)
-    node[right] {$x$};
-  \draw[->,thick]
-    (0,\ya) -- (0,\yb)
-    node[left] {$y$};
-  % functions
-  \draw (0,0.70710678) -- (pi,0.70710678);
-  \draw (pi/4,0.70710678) -- (pi/4,0.);
-  \draw (3*pi/4,0.70710678) -- (3*pi/4,0.);
-  \draw[fill=blue] (pi/4,0) circle (.03cm);
-  \draw[fill=blue] (3*pi/4,0) circle (.03cm);
-  \draw[thick,color=blue,samples=\N,domain=\xa:\xb] % SIN
-    plot(\x,{sin(\x r)}) % r for radians
-    node[above right] at (pi/2-0.7,1) {$\sin(x)$};
-  % ticks
-  \draw[] % x \contour{white}{$\x^\circ$}};
-    node[below right,scale=0.9] at (     0, 0) {0}
-    node[below,scale=0.9] at (  pi/2, 0) {$\nicefrac{\pi}{2}$}
-    node[below,scale=0.9] at (  pi/4, 0) {$x_1$}
-    node[below,scale=0.9] at (  3*pi/4, 0) {$x_2$}
-    node[below,scale=0.9] at (  pi,   0) {\contour{white}{$\pi$}};
-  \draw[] % y
-    node[left,scale=0.9] at ( 0, 0.70710678) {$y$};    
-\end{tikzpicture}
+  \begin{alignat*}{5}
+  &C'_1\cos(2t) &+& &C_2'\sin(2t) &+& &C_3'e^{2t} &=&0\\
+-2&C'_1\sin(2t) &+&2&C_2'\cos(2t) &+&2&C_3'e^{2t} &=&0\\
+-4&C'_1\cos(2t) &-&4&C_2'\sin(2t) &+&4&C_3'e^{2t} &=&\frac{1}{\cos t}
+\end{alignat*}
+
+
+
+\begin{IEEEeqnarray}{lllllllllll}
+ &C'_1\cos(2t) &+& &C_2'\sin(2t) &+& &C_3'e^{2t} &=&0\\
+-2&C'_1\sin(2t) &+&2&C_2'\cos(2t) &+&2&C_3'e^{2t} &=&0\\
+-4&C'_1\cos(2t) &-&4&C_2'\sin(2t) &+&4&C_3'e^{2t} &=&\frac{1}{\cos t}
+\end{IEEEeqnarray}
 
 \end{document}
