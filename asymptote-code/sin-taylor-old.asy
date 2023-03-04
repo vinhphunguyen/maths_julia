@@ -2,12 +2,12 @@ import graph;
 import geometry;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
-size(12cm, keepAspect=true);
-defaultpen(fontsize(10pt));
+size(16cm, keepAspect=true);
+defaultpen(fontsize(14pt));
 
 
 picture pic1, pic2, pic3;
@@ -24,7 +24,7 @@ real alpha1=60;
 real alpha2=0;
 real alpha3=-60;
 
-draw(pic3,unitcircle,red+1.2pt);
+draw(pic3,unitcircle,red+1pt);
 
 pair A=dir(alpha2);
 pair B=dir(alpha1);
@@ -53,8 +53,8 @@ label(pic3,"$C$",C+(0.0,-0.2),blue);
 label(pic3,"$D$",D+(0.2,-0.),blue);
 label(pic3,"$H$",H+(0.1,-0.1),blue);
 
-label(pic3,"$a)$",(-1,-1),blue);
-label(pic2,"$b)$",(-1,-1),blue);
+label(pic3,"$a)$",(-1,-1));
+label(pic2,"$b)$",(-1,-1));
 
 perpendicular(pic3,H,NE,H--A,blue);
 
@@ -63,7 +63,7 @@ draw(pic3,Label("$\theta/2$",MidPoint ),arc((0,0),r,0,alpha1),gray+.8pt);
 draw(pic3,Label("$\theta/2$",MidPoint),arc((0,0),r1,0,-alpha1),gray+.8pt);
 
 fill(O--B--C--cycle,cyan);
-fill(A--B--C--cycle,green);
+fill(A--B--C--cycle,mediumgray);
 fill(A--B--D--cycle,lightblue);
 fill(A--C--D1--cycle,lightblue);
 
@@ -83,7 +83,7 @@ real alpha1=60;
 real alpha2=0;
 real alpha3=-60;
 
-draw(pic2,unitcircle,red+1.2pt);
+draw(pic2,unitcircle,red+1pt);
 
 pair A=dir(alpha2);
 pair B=dir(alpha1);

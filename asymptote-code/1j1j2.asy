@@ -60,8 +60,12 @@ for( int i = 0; i < 12; ++i)
   dot(pic2,dir(i*theta2),black+3pt);
 }
 
+
+
 dot(pic2,dir(0*theta2),red+5pt);
 dot(pic2,dir(4*theta2),red+5pt);
 dot(pic2,dir(8*theta2),red+5pt);
+
+
 
 add(pic2);

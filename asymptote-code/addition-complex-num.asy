@@ -1,6 +1,7 @@
 import graph;
+
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 usepackage("empheq");
 usepackage("color");
 
@@ -10,41 +11,53 @@ settings.outformat="pdf"; // output is pdf
 
 import geometry;
 
-size(15cm, keepAspect=true);
-defaultpen(fontsize(16pt));
+
+void plot_label(pair A, pair B, pair C, string s, real l, pen c)
+{
+	pair AB=B-A;
+	AB=AB/length(AB);
+	real alpha=degrees(acos(AB.x));
+	if ( AB.y < 0 ) alpha = -alpha;
+	pair normal=(-AB.y,AB.x);
+	if (dot(normal,C-.5(A+B)) > 0 ) normal *= -1;
+	label(rotate(alpha)*s,.5(A+B)+l*normal,c);
+}
+
+size(7cm, keepAspect=true);
+defaultpen(fontsize(12pt));
 
 add(shift(0,0)*grid(11,10,gray+0.2pt));
 
 picture pic1, pic2;
 
-draw(pic1,Label("$\text{Re}$",Relative(0.99)),(-.5,0)--(11,0),black+1.2pt,Arrow(TeXHead));
-draw(pic1,Label("$\text{Im}$",Relative(0.99)),(0,-.5)--(0,10),black+1.2pt,Arrow(TeXHead));
+draw(pic1,Label("$\text{Re}$",Relative(0.99)),(-.5,0)--(11,0),black+1.pt,Arrow(TeXHead));
+draw(pic1,Label("$\text{Im}$",Relative(0.99)),(0,-.5)--(0,10),black+1.pt,Arrow(TeXHead));
 
 pair O=(0,0);
 pair A=(7,3);
 pair B=(3,6);
 pair C=(10,9);
 
-draw(O--A,blue+2pt,ArcArrow);
-draw(O--B,red+2pt,ArcArrow);
-draw(A--C,black+1.4pt);
-draw(B--C,black+1.4pt);
-draw(O--C,orange+2pt,ArcArrow);
+draw(O--A,blue+1pt,ArcArrow);
+draw(O--B,red+1pt,ArcArrow);
+draw(A--C,black+1.pt);
+draw(B--C,black+1.pt);
+draw(O--C,orange+1.1pt,ArcArrow);
 
 
 real alphaA=degrees(atan(A.y/A.x));
 real alphaB=degrees(atan(B.y/B.x));
 real alphaC=degrees(atan(C.y/C.x));
 
-Label La=Label("$\bm{a}=7+3i$",align=(0,0),MidPoint);
-Label Lb=Label("$\bm{b}=3+6i$",align=(0,0),MidPoint);
-Label Lab=Label("$\bm{a}+\bm{b}$",align=(0,0),MidPoint);
+Label La=Label("$\boldsymbol{a}=7+3i$",align=(0,0),MidPoint);
+Label Lb=Label("$\boldsymbol{b}=3+6i$",align=(0,0),MidPoint);
+Label Lab=Label("$\boldsymbol{a}+\boldsymbol{b}$",align=(0,0),MidPoint);
 
-label(rotate(alphaA)*La,(3.2,.8),blue);
-label(rotate(alphaB)*Lb,(1.66,2.55),red);
-label(rotate(alphaC)*Lab,(5,4),orange);
+plot_label(O,A,B,"$\boldsymbol{a}=7+3i$",.6,blue);
+plot_label(O,B,C,"$\boldsymbol{b}=3+6i$",.5,red);
+plot_label(O,C,B,"$\boldsymbol{a}+\boldsymbol{b}$",.4,orange);
 
-label("$\bm{a}+\bm{b}=10+9i$",(3,8),red);
+label("$\boldsymbol{a}+\boldsymbol{b}=10+9i$",(3,8),red);
 
 
 /* Label L1=Label("$y(t)$",align=O,MidPoint,Fill(white));

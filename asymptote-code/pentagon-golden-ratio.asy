@@ -1,9 +1,10 @@
 import graph;
 import geometry;
+import markers;
 import gsl;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
@@ -70,8 +71,16 @@ add(pic2);
 
 pair H=extension( A,D,C,Ee );
 
+
+
 fill(pic1,H--A--C--cycle,pink);
 fill(pic1,H--D--Ee--cycle,cyan);
+
+
+markangle(pic1,"$\alpha$",Ee,C,A,n=1,radius=4mm,Fill(orange));
+markangle(pic1,"$\alpha$",Ee,D,A,n=1,radius=4mm,Fill(orange));
+markangle(pic1,"$\beta$",D,H,Ee,n=2,radius=4mm,Fill(yellow));
+markangle(pic1,"$\beta$",A,H,C,n=2,radius=4mm,Fill(yellow));
 
 draw(pic1,scale(rad)*unitcircle,p);
 draw(pic1,scale(rad)*polygon(5),p1);

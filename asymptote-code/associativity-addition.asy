@@ -2,11 +2,12 @@ import graph;
 import geometry;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
-size(6cm); // size of the image
+size(8cm); // size of the image
+defaultpen(fontsize(12pt));
 
 pair m1=(0,0); // location of the mass m1
 pair m2=(2,0); // location of the mass m2

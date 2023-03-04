@@ -1,6 +1,6 @@
 import graph;
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 usepackage("empheq");
 usepackage("color");
 
@@ -17,8 +17,8 @@ add(shift(-4,-4)*grid(8,8,gray+0.4pt));
 
 picture pic1, pic2;
 
-draw(Label("$\text{x}$",Relative(0.99)),(-4,0)--(4,0),black+1.4pt,Arrow(TeXHead));
-draw(Label("$\text{y}$",Relative(0.99)),(0,-4)--(0,4),black+1.4pt,Arrow(TeXHead));
+draw(Label("${x}$",Relative(0.99)),(-4,0)--(4,0),black+1.4pt,Arrow(TeXHead));
+draw(Label("${y}$",Relative(0.99)),(0,-4)--(0,4),black+1.4pt,Arrow(TeXHead));
 
 pair O=(0,0);
 pair A=(2,3);

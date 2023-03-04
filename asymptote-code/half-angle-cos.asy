@@ -2,40 +2,41 @@ import graph;
 import geometry;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
-size(16cm, keepAspect=true);
+size(8cm, keepAspect=true);
+defaultpen(fontsize(12pt));
 
 picture pic2;
 
 // pic 2
-draw(pic2,unitcircle,black+1.6pt);
+draw(pic2,unitcircle,black+1.pt);
 
-real yC=sqrt(1-0.3^2);
-real theta=degrees(atan(yC/1.3));
-real beta=90-degrees(atan(yC/1.3));
+real yC=sqrt(1-0.5^2);
+real theta=degrees(atan(yC/1.5));
+real beta=90-degrees(atan(yC/1.5));
 
 pair A=dir(theta);
-pair C=(0.3,yC);
+pair C=(0.5,yC);
 
-draw(pic2,(-1,0)--(1,0),black+1.2pt);
-draw(pic2,(-1,0)--C,black+1.2pt);
-draw(pic2,(1,0)--C,black+1.2pt);
-draw(pic2,(C.x,0)--C,black+1.2pt);
-draw(pic2,(0,0)--C,black+1.2pt);
+draw(pic2,(-1,0)--(1,0),black+1.pt);
+draw(pic2,(-1,0)--C,black+1.pt);
+draw(pic2,(1,0)--C,black+1.pt);
+draw(pic2,(C.x,0)--C,black+1.pt);
+draw(pic2,(0,0)--C,black+1.pt);
 
-draw(pic2,"$\theta$",arc((-1,0),0.26,0,theta),red+1.2pt);
-draw(pic2,"$2\theta$",arc((0,0),0.22,0,2*theta),red+1.2pt);
-draw(pic2,"$\beta$",arc((1,0),0.22,180-beta,180),blue+1.2pt);
+draw(pic2,"$\theta$",arc((-1,0),0.26,0,theta),red+1.pt);
+draw(pic2,"$2\theta$",arc((0,0),0.22,0,2*theta),red+1.pt);
+draw(pic2,"$\beta$",arc((1,0),0.22,180-beta,180),blue+1.pt);
 
 label(pic2,"$\displaystyle\frac{1}{2}$",(0.,0.5),blue);
-label(pic2,"$O$",(0.,-0.09),blue);
-label(pic2,"$A$",(-.9,-0.09),blue);
-label(pic2,"$B$",(1.1,-0.09),blue);
-label(pic2,"$C$",C+(.06,.09),blue);
-label(pic2,"$H$",(C.x,-0.09),blue);
+label(pic2,"$O$",(0.,-0.1),blue);
+label(pic2,"$A$",(-.9,-0.1),blue);
+label(pic2,"$B$",(1.1,-0.1),blue);
+label(pic2,"$C$",C+(.06,.1),blue);
+label(pic2,"$H$",(C.x,-0.1),blue);
 
 perpendicular(C,NE,C--(-1,0),blue);
 perpendicular((C.x,0),NE,blue);
@@ -53,7 +54,7 @@ string s="\begin{minipage}{3cm}
 \end{minipage}
 ";
 
-label(pic2,s,(2.2,.3), red);
+//label(pic2,s,(3.5,.3), red);
 
 dot(pic2,(0,0),blue+3pt);
 

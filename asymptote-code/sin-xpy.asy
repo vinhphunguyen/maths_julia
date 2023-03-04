@@ -11,7 +11,7 @@ settings.outformat="pdf"; // output is pdf
 
 defaultpen(fontsize(12pt));
 
-size(13cm, keepAspect=true);
+size(11cm, keepAspect=true);
 
 picture pic1;
 

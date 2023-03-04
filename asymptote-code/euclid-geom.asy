@@ -1,9 +1,10 @@
 import graph;
 import geometry;
+import markers;
 import gsl;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
@@ -48,13 +49,17 @@ add(shift(2,0)*pic2);
 pair A = (-0.3,-0.1);
 pair B = (1,0);
 pair C = (0.4,0.85);
-
 fill(pic3,A--B--C--cycle,mediumgray);
+
+
+markangle(pic3,"$\alpha$",B,A,C,n=1,radius=4mm,Fill(orange));
+
 draw(pic3,A--B--C--cycle,p);
 
 label(pic3,"$A$",A+.2S);
 label(pic3,"$B$",B+.2S);
 label(pic3,"$C$",C+.2N);
+
 
 dot(pic3,A,black+4pt);
 dot(pic3,B,black+4pt);

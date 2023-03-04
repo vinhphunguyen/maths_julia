@@ -2,11 +2,12 @@ import graph;
 import geometry;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
-size(6cm); // size of the image
+size(8cm); // size of the image
+defaultpen(fontsize(12pt));
 
 pair m1=(0,0); // location of the mass m1
 pair m2=(3,0); // location of the mass m2
@@ -29,7 +30,7 @@ fill(s11 -- m41 -- cycle, green);
 
 Label L1=Label("$5$",align=O,MidPoint,Fill(white));
 Label L2=Label("$3$",align=O,MidPoint,Fill(white));
-draw(L1,(-.25,0)--(-.25,5),Arrows(TeXHead),Bars);
+draw(L1,(-.35,0)--(-.35,5),Arrows(TeXHead),Bars);
 draw(L2,(0,-.35)--(3,-.35),Arrows(TeXHead),Bars);
 
 draw(L1,(4,-.35)--(9,-.35),Arrows(TeXHead),Bars);
