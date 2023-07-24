@@ -2,30 +2,30 @@ using Plots
 using LaTeXStrings
 using PyCall
 using StatsBase
-
+using DelimitedFiles
 
 mpl = pyimport("matplotlib")
 plt = pyimport("matplotlib.pyplot")
 pat = pyimport("matplotlib.patches")
 sns = pyimport("seaborn")
 
-sns.set_style("ticks") # dark_background, 
+sns.set_style("ticks") # dark_background,
 
 rcParams = PyDict(mpl["rcParams"])
-rcParams["font.size"] = 16
+rcParams["font.size"] = 22
 rcParams["text.usetex"] = 1
 rcParams["font.family"] = "serif"
-rcParams["axes.labelsize"] = 16
-rcParams["legend.fontsize"] = 16
-rcParams["xtick.labelsize"] = 16
-rcParams["ytick.labelsize"] = 16
+rcParams["axes.labelsize"] = 22
+rcParams["legend.fontsize"] = 22
+rcParams["xtick.labelsize"] = 22
+rcParams["ytick.labelsize"] = 22
 
 function set_size(scale=1)
 	width_pt = 468.
 	inches_per_pt = 1 / 72.27
 	golden_ratio = 0.75
-	fig_width_in  = scale * width_pt * inches_per_pt # Figure width in inches 
-	fig_height_in = fig_width_in * golden_ratio 
+	fig_width_in  = scale * width_pt * inches_per_pt # Figure width in inches
+	fig_height_in = fig_width_in * golden_ratio
 	fig_dim = ( fig_width_in , fig_height_in )
 	return fig_dim
 end
@@ -185,7 +185,7 @@ function birthday_event(n)
   birthday_a_year      = 1:365
   birthdays_n_pers     = [rand(birthday_a_year) for _ in 1:n]
   birthdays_occurences = counts(birthdays_n_pers)
-  return maximum(birthdays_occurences) > 1 
+  return maximum(birthdays_occurences) > 1
 end
 
 N = 10^5
@@ -195,9 +195,13 @@ function birthday_experiment(n)
 end
 
 xs  = 1:50
-
 ys1 = [exact_sol(n) for n in xs]
 ys2 = [birthday_experiment(n) for n in xs]
+
+data = hcat(xs, ys1, ys2)
+
+header = ["n" "e" "p"]
+writedlm( "birthday.csv",  [header;data], ',')
 
 fig , ax = plt.subplots(1, 1, figsize=set_size(1.2))
 
@@ -285,4 +289,29 @@ function do_bar_plots(filename)
 	plt.savefig(filename,bbox_inches="tight")
 end
 
-do_bar_plots("probabilities_same_ex.pdf")
+do_bar_plot("probabilities_same_ex.pdf")
+
+function dating_algorithm(N)
+    xs  = 1:N
+    ys  = zeros(N)
+
+	for r = 1:N
+		ys[r] = 0
+		for n=r:N-1
+			ys[r] += 1/n
+		end
+		ys[r] *= (r/N)
+	end
+
+	fig , ax = plt.subplots(1, 1, figsize=set_size())
+
+	ax.set_xticks([1,2,3,4,5,6,7,8,9,10])
+	#ax.set_yticks([0,0.25,0.5])
+
+    plt.bar(xs, ys, color ="maroon", width = 0.4)
+    plt.xlabel(L"$r$")
+    plt.ylabel(L"$P(r)$")
+    plt.savefig("probability-dating-algo.pdf",bbox_inches="tight")
+end
+
+dating_algorithm(10)

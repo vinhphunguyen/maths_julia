@@ -43,3 +43,17 @@ p6=plot(xa,S15,label=L"S_{15}")
 plot!(p6,xa,f,color="red",label=L"f(x)")
 plot(p1, p2, p3,p4,p5,p6, layout = (3, 2),size=(650,450))
 savefig("plot-fourier-square-wave.pdf")
+
+
+S = 0
+n = 200
+
+for a=0:n
+	for b=0:n
+		for c=0:n
+			S += 1 / factorial(big(a+b+c))
+		end
+	end
+end
+
+print(S)

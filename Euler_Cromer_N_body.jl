@@ -81,7 +81,7 @@ function n_body()
 	xlabel!(L"x")
 	ylabel!(L"y")
 
-	savefig(p, "Euler-three-body.pdf")
+	#savefig(p, "Euler-three-body.pdf")
 
 	anim = @animate for n in 1:stepCount
 		# the whole plot

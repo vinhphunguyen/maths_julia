@@ -12,7 +12,7 @@ pat = pyimport("matplotlib.patches")
 sns = pyimport("seaborn")
 tools=pyimport("mpl_toolkits.axes_grid.inset_locator")
 
-sns.set_style("ticks") # dark_background, 
+sns.set_style("ticks") # dark_background,
 
 rcParams = PyDict(mpl["rcParams"])
 rcParams["font.size"] = 16
@@ -27,8 +27,8 @@ function set_size(scale=1)
   width_pt = 468.
   inches_per_pt = 1 / 72.27
   golden_ratio = 0.75
-  fig_width_in  = scale * width_pt * inches_per_pt # Figure width in inches 
-  fig_height_in = fig_width_in * golden_ratio 
+  fig_width_in  = scale * width_pt * inches_per_pt # Figure width in inches
+  fig_height_in = fig_width_in * golden_ratio
   fig_dim = ( fig_width_in , fig_height_in )
   return fig_dim
 end
@@ -38,7 +38,7 @@ function lagrange_basis_i(i,data_x,x)
   li = 1.0
   xi = data_x[i]
   for j=1:length(data_x)
-    if j != i 
+    if j != i
       xj = data_x[j]
       li *= (x-xj)/(xi-xj)
     end
@@ -61,10 +61,10 @@ function get_lambda(data_x)
   for i = 1:n
     xi = data_x[i]
     for j = 1:n
-      if j != i 
+      if j != i
         λ[i] *= xi - data_x[j]
-      end 
-    end 
+      end
+    end
     λ[i] = 1 / λ[i]
   end
 
@@ -92,7 +92,7 @@ function lagrange_interpolation_barycentric(data_x,data_y,λ,x)
   ws = 0.
   for i=1:n
     wi  = λ[i] / ( x - data_x[i])
-    fx += wi * data_y[i] 
+    fx += wi * data_y[i]
     ws += wi
   end
   return fx / ws
@@ -110,7 +110,7 @@ function plot_lagrange_interpolation()
   func  = zeros(length(ta))
 
   for i=1:length(ta)
-    func[i] =   lagrange_interpolation(data_x,data_y,ta[i]) 
+    func[i] =   lagrange_interpolation(data_x,data_y,ta[i])
   end
 
   fig = plt.figure(figsize=(8,5))
@@ -129,7 +129,7 @@ end
 ## RUNGE PHENOMENON
 ###################################################################
 
-function Runge(x) 
+function Runge(x)
  return 1 / ( 1 + 25 * x * x)
 end
 
@@ -140,7 +140,7 @@ function show_Runge_phenomenon()
   lagrange9  = zeros(length(xa))
 
   for i=1:length(xa)
-    runge[i] =   Runge(xa[i]) 
+    runge[i] =   Runge(xa[i])
   end
 
   data_x5  = zeros(6)
@@ -163,8 +163,8 @@ function show_Runge_phenomenon()
   end
 
   for i=1:length(xa)
-    lagrange5[i] =   lagrange_interpolation(data_x5,data_y5,xa[i]) 
-    lagrange9[i] =   lagrange_interpolation(data_x10,data_y10,xa[i]) 
+    lagrange5[i] =   lagrange_interpolation(data_x5,data_y5,xa[i])
+    lagrange9[i] =   lagrange_interpolation(data_x10,data_y10,xa[i])
   end
 
 
@@ -186,7 +186,7 @@ end
 ## EXACTNESS FOR POLYNOMIALS
 ###################################################################
 
-function quartic(x) 
+function quartic(x)
  return x^4/4-2*x^3+(11/2)*x^2-6x
 end
 
@@ -195,7 +195,7 @@ func       = zeros(length(xa))
 lagrange   = zeros(length(xa))
 
 for i=1:length(xa)
-  func[i] =   quartic(xa[i]) 
+  func[i] =   quartic(xa[i])
 end
 
 data_x5 = zeros(5)
@@ -203,14 +203,14 @@ data_y5 = zeros(5)
 
 
 for i=1:5
-  x          = 0 + 4*(i-1)/4 
+  x          = 0 + 4*(i-1)/4
   data_x5[i] = x
   data_y5[i] = quartic(x)
 end
 
 
 for i=1:length(xa)
-  lagrange[i] =   lagrange_interpolation(data_x5,data_y5,xa[i]) 
+  lagrange[i] =   lagrange_interpolation(data_x5,data_y5,xa[i])
 end
 
 
@@ -228,8 +228,8 @@ plt.savefig("plot-lagrange-exact.pdf",bbox_inches="tight")
 
 
 ##
-## 
-## 
+##
+##
 
 
 
@@ -244,7 +244,7 @@ end
 
 ##
 
-function lagrange_basis(nodes,x) # l_i(x) 
+function lagrange_basis(nodes,x) # l_i(x)
     ls = ones(length(nodes))
     for i=1:length(nodes)
       xi = nodes[i]
@@ -253,17 +253,17 @@ function lagrange_basis(nodes,x) # l_i(x)
         if j != i
         xj = nodes[j]
         li *= (x-xj)/(xi-xj)
-        end 
+        end
       end
       ls[i] = li
     end
-    return ls 
+    return ls
 end
 
 function chebyshev_polynomials(n,x)
   if n == 0 return 1. end
   if n == 1 return x end
-  
+
   return 2*x*chebyshev_polynomials(n-1,x)-chebyshev_polynomials(n-2,x)
 end
 
@@ -277,21 +277,21 @@ function plot_chebyshev()
   basis=zeros(n,length(xgrid))
 
   for (j,x) in enumerate(xgrid)
-    for i = 0:n-1 
+    for i = 0:n-1
       basis[i+1,j] = chebyshev_polynomials(i,x)
     end
   end
 
   plt.plot(xgrid,basis[1,:],color="black","-",linewidth=1.,label=L"$T_0$")
   plt.plot(xgrid,basis[2,:],color="red","-",linewidth=1.,label=L"$T_1$")
-  plt.plot(xgrid,basis[3,:],color="blue","-",linewidth=1.,label=L"$T_3$")
-  plt.plot(xgrid,basis[4,:],color="cyan","-",linewidth=1.,label=L"$T_4$")
-  plt.plot(xgrid,basis[5,:],color="orange","-",linewidth=1.,label=L"$T_5$")
+  plt.plot(xgrid,basis[3,:],color="blue","-",linewidth=1.,label=L"$T_2$")
+  plt.plot(xgrid,basis[4,:],color="cyan","-",linewidth=1.,label=L"$T_3$")
+  plt.plot(xgrid,basis[5,:],color="orange","-",linewidth=1.,label=L"$T_4$")
 
   #plt.legend()
   plt.legend(loc="upper left", ncol=5, fontsize=6)
   plt.grid(true)
-  
+
    # legend([l1,l2], ["b","c"], loc=1)
   plt.savefig("chebyshev1.pdf",bbox_inches="tight")
 end
@@ -320,7 +320,7 @@ function plot_chebyshev_points()
   ax.set_aspect("equal", "box")
   plt.ylim(bottom=-0.1)
   plt.legend()
-  
+
    # legend([l1,l2], ["b","c"], loc=1)
   plt.savefig("chebyshev_nodes_circle.pdf",bbox_inches="tight")
 end
@@ -341,7 +341,7 @@ function dd()
   plt.plot(xgrid,Ns[:,3],color="black","-",linewidth=1.,label=L"$l_2$")
 
   plt.legend()
-  
+
    # legend([l1,l2], ["b","c"], loc=1)
   plt.savefig("lagrange_quadratic.pdf",bbox_inches="tight")
 end
@@ -365,7 +365,7 @@ f5  = diff(f,x,6)
   plt.plot(xgrid,yh5,color="black","-",linewidth=1.,label="6th derivative")
 
   plt.legend()
-  
+
    # legend([l1,l2], ["b","c"], loc=1)
   plt.savefig("runge_derivative6.pdf",bbox_inches="tight")
 
@@ -380,7 +380,7 @@ function show_Runge_phenomenon_Chebyshev_nodes()
   lagrange9  = zeros(length(xa))
 
   for i=1:length(xa)
-    runge[i] =   Runge(xa[i]) 
+    runge[i] =   Runge(xa[i])
   end
 
   data_x5  = zeros(10)
@@ -405,8 +405,8 @@ function show_Runge_phenomenon_Chebyshev_nodes()
   end
 
   for i=1:length(xa)
-    lagrange5[i] =   lagrange_interpolation(data_x5,data_y5,xa[i]) 
-    lagrange9[i] =   lagrange_interpolation(data_x10,data_y10,xa[i]) 
+    lagrange5[i] =   lagrange_interpolation(data_x5,data_y5,xa[i])
+    lagrange9[i] =   lagrange_interpolation(data_x10,data_y10,xa[i])
   end
 
 
@@ -423,7 +423,7 @@ function show_Runge_phenomenon_Chebyshev_nodes()
   plt.legend(loc="upper right")
   plt.savefig("plot-runge-chebyshev.pdf",bbox_inches="tight")
 end
- 
+
 #show_Runge_phenomenon_Chebyshev_nodes()
 
 function ff1(pcount)
@@ -434,7 +434,7 @@ function ff1(pcount)
 
   xgrid = -1:0.01:1
   for i=1:pcount
-    lag[i] =   lagrange_interpolation(xdata,ydata,xgrid[i]) 
+    lag[i] =   lagrange_interpolation(xdata,ydata,xgrid[i])
   end
 end
 
@@ -447,7 +447,7 @@ function ff2(pcount)
   lag   = zeros(length(xgrid))
   λ     = get_lambda(xdata)
   for i=1:length(xgrid)
-    lag[i] =   lagrange_interpolation_improved(xdata,ydata,λ,xgrid[i]) 
+    lag[i] =   lagrange_interpolation_improved(xdata,ydata,λ,xgrid[i])
   end
 
   # fig = plt.figure(figsize=set_size())
@@ -470,7 +470,7 @@ function ff3(pcount)
   lag   = zeros(length(xgrid))
   λ     = get_lambda(xdata)
   for i=1:length(xgrid)
-    lag[i] =   lagrange_interpolation_barycentric(xdata,ydata,λ,xgrid[i]) 
+    lag[i] =   lagrange_interpolation_barycentric(xdata,ydata,λ,xgrid[i])
   end
 
   # fig = plt.figure(figsize=set_size())
@@ -493,7 +493,7 @@ function factorial_interpolation()
   lag   = zeros(length(xgrid))
   λ     = get_lambda(xdata)
   for i=1:length(xgrid)
-    lag[i] =   lagrange_interpolation_barycentric(xdata,ydata,λ,xgrid[i]) 
+    lag[i] =   lagrange_interpolation_barycentric(xdata,ydata,λ,xgrid[i])
   end
 
   fig = plt.figure(figsize=set_size())
