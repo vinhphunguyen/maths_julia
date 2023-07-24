@@ -1,4 +1,4 @@
-import graph;
+sepimport graph;
 import geometry;
 
 usepackage("amsmath");
