@@ -2,7 +2,7 @@ import graph;
 import geometry;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
@@ -25,10 +25,10 @@ real alpha=90-degrees(atan2(3,4));
 pair H = B+5*dir(alpha);
 pair K = H+5*dir(90+alpha);
 
-fill(B--H--K-- C--cycle, blue);
+fill(B--H--K-- C--cycle, cyan);
 
 label("$a$",(-0.1,1.5),1.01*SE);
-label("$b$",(2,0.1),1.01*SE);
+label("$b$",(2,0.1),1.02*SE);
 label("$c$",(1.92,1.26),1.01*SE);
 
 label("$a^2$",(-1.5,1.5));

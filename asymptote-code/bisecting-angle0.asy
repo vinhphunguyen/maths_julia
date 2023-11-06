@@ -26,29 +26,13 @@ point b1 = intersectionpoint(x,line(B,B2));
 
 markangle("$\alpha$",B12,B,B2,n=1,radius=9mm,Fill(orange));
 markangle("$\alpha$",B1,B,B12,n=1,radius=9mm,Fill(orange));
-perpendicularmark(line(B,M),x,quarter=1);
-markangle("$\beta$",M,a1,B,n=2,radius=4mm,Fill(yellow));
-markangle("$\beta$",B,b1,M,n=2,radius=4mm,Fill(yellow));
-
-draw(B--a1,StickIntervalMarker(1,2,angle=-25 ) );
-draw(B--b1,StickIntervalMarker(1,2,angle=-25 ) );
-
-draw(arc(B,length(b1-B),-5,85),p);
 
 draw(B--B1,p);
 draw(B--B2,p);
 draw(B--B12,pr);
-draw(a1--b1);
-
-dot(M,red+4pt);
-dot(a1,red+4pt);
-dot(b1,red+4pt);
 
 label("$l_1$",B1+.1S);
 label("$l_2$",B2+.1N);
 label("$m$",B12+.1N);
-label("$M$",M+.1S);
-label("$A$",a1+.1NE);
-label("$B$",b1+.1N);
 label("$O$",B+(.0,.1));
 

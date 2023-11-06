@@ -15,17 +15,39 @@ real a=2.6;
 real b=.47; 
 real h=4;
 
+// parametric representation of the ellipse
+
 pair ellipse_param(real t)
 {
 	return (a*cos(t), b*sin(t));
 }
+
+// derivative of the above function
 
 pair ellipse_param_der(real t)
 {
   return (-a*sin(t), b*cos(t));
 }
 
+// tangents to the ellipse
 
+real t0 = 0.1;
+pair ellipse_tangent_p01(real t)
+{
+  pair P0 = ellipse_param(t0);
+  pair va = ellipse_param_der(t0);
+  return (P0.x + t*va.x, P0.y + t * va.y);
+}
+
+real t0 = pi-0.1;
+pair ellipse_tangent_p02(real t)
+{
+  pair P0 = ellipse_param(t0);
+  pair va = ellipse_param_der(t0);
+  return (P0.x + t*va.x, P0.y + t * va.y);
+}
+
+// pens
 
 pen p =black+1pt;
 pen pd =dashed+1pt;
@@ -57,7 +79,7 @@ label(pic3,"SPHERE",(0.1a,6-1.9));
 
 add(pic1);
 
-// pic2
+// pic2 (an ellipse)
 
 path el_up   = graph(ellipse_param,0,pi);
 path el_do   = graph(ellipse_param,pi,2pi);
@@ -68,28 +90,9 @@ pair P2=ellipse_param(pi);
 draw(pic2,el_up,pd);
 draw(pic2,el_do,p);
 
-real t0 = 0.1;
-pair ellipse_tangent_p01(real t)
-{
-  pair P0 = ellipse_param(t0);
-  pair va = ellipse_param_der(t0);
-  return (P0.x + t*va.x, P0.y + t * va.y);
-}
-
-
 real tmin=-10., tmax=10.8;
 
 path el_tangent1 = graph(ellipse_tangent_p01,tmin,tmax);
-
-
-real t0 = pi-0.1;
-pair ellipse_tangent_p02(real t)
-{
-  pair P0 = ellipse_param(t0);
-  pair va = ellipse_param_der(t0);
-  return (P0.x + t*va.x, P0.y + t * va.y);
-}
-
 path el_tangent2 = graph(ellipse_tangent_p02,tmin,tmax);
 
 //draw(pic2,el_tangent1,p);

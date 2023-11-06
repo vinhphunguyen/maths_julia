@@ -17,6 +17,12 @@ path p =polygon(8);
 label("$O$",(0,0),1.01*SE);
 label("$A$",(1,0),1.01*NE);
 label("$B$",dir(45),1.01*NE);
+label("$C$",dir(2*45),1.01*N);
+label("$D$",dir(3*45),1.01*NW);
+label("$E$",dir(4*45),1.01*W);
+label("$F$",dir(5*45),1.03*S);
+label("$G$",dir(6*45),1.01*S);
+label("$H$",dir(7*45),1.01*SE);
 label("$r$",(.5,-.05));
 label("$\alpha$",(.35,0.2));
 draw((0,0)--dir(45),black+1pt);  // draw the force

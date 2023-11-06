@@ -7,7 +7,7 @@ usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
-size(8cm, keepAspect=true);
+size(6cm, keepAspect=true);
 defaultpen(fontsize(10pt));
 
 
@@ -29,8 +29,8 @@ pair C=dir(alpha3);
 pair H=(C.x,0);
 
 
-markangle("$\alpha$",H,A,C,n=1,radius=9mm,Fill(orange));
-markangle("$\alpha$",H,C,B,n=1,radius=9mm,Fill(orange));
+markangle("$\alpha$",H,A,C,n=1,radius=7mm,Fill(orange));
+markangle("$\alpha$",H,C,B,n=1,radius=7mm,Fill(orange));
 
 pen p =black+1pt;
 draw(A--B--C--cycle,p);
@@ -40,7 +40,7 @@ perpendicularmark(line(H,C),line(H,B),quarter=1);
 
 label("$A$",A+(.1,-.1));
 label("$B$",B+.1E);
-label("$C$",C+.1E);
+label("$C$",C+.1N);
 label("$H$",H+.1S);
 
 

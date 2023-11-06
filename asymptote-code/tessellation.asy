@@ -1,3 +1,4 @@
+
 import graph;
 import geometry;
 
@@ -52,8 +53,8 @@ fill(pic2,shift(A-rotate(180)*B)*tri1,yellow);
 draw(pic2,shift(A-rotate(180)*B)*tri1,p);
 fill(pic2,shift(A-rotate(180)*C)*tri1,yellow);
 draw(pic2,shift(A-rotate(180)*C)*tri1,p);
-fill(pic2,shift(AB,0)*tri,yellow);
-draw(pic2,shift(AB,0)*tri,p);
+//fill(pic2,shift(AB,0)*tri,yellow);
+//draw(pic2,shift(AB,0)*tri,p);
 fill(pic2,shift(A-C)*tri,yellow);
 draw(pic2,shift(A-C)*tri,p);
 fill(pic2,shift(A-B)*tri,yellow);

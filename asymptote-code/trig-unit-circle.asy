@@ -34,6 +34,8 @@ pair A=dir(theta);
 draw(pic1,(0,0)--A);
 draw("$\alpha$",arc((0,0),0.26,0,theta),Arrow,PenMargins);
 label(pic1,"$A$",A+(0.2,0.2),blue);
+label(pic1,"$O$",(-0.1,-0.1),blue);
+label(pic2,"$O$",(-0.1,-0.1),blue);
 dot(pic1,A,blue+3pt);
 
 

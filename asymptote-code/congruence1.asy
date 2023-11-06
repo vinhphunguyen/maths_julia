@@ -21,9 +21,9 @@ pair A = (-0.3,0);
 pair B = (1,0);
 pair C = (0.4,0.85);
 
-pair A1 = shift(1.2,1)*rotate(30)*A;
-pair B1 = shift(1.2,1)*rotate(30)*B;
-pair C1 = shift(1.2,1)*rotate(30)*C;
+pair A1 = shift(1.5,.5)*rotate(30)*A;
+pair B1 = shift(1.5,.5)*rotate(30)*B;
+pair C1 = shift(1.5,.5)*rotate(30)*C;
 
 //fill(pic3,A--B--C--cycle,mediumgray);
 

@@ -12,9 +12,10 @@ defaultpen(fontsize(10pt));
 
 point B =(0,0);
 point B1=(1.2,0);
-point B2=1.5dir(30);
-point M =1.dir(15);
-point B12=1.5dir(30/2);
+real ang = 60;
+point B2=1.5dir(ang);
+point M =1.dir(0.5*ang);
+point B12=1.5dir(0.5ang);
 
 pen p = black + 1pt;
 pen pr = red + 1pt;
@@ -28,7 +29,6 @@ markangle("$\alpha$",B1,B,B12,n=1,radius=9mm,Fill(orange));
 perpendicularmark(line(B,M),x,quarter=1);
 markangle("$\beta$",M,a1,B,n=2,radius=4mm,Fill(yellow));
 markangle("$\beta$",B,b1,M,n=2,radius=4mm,Fill(yellow));
-
 
 
 draw(B--a1,StickIntervalMarker(1,2,angle=-25 ) );
@@ -47,8 +47,8 @@ dot(b1,red+4pt);
 label("$l_1$",B1+.1S);
 label("$l_2$",B2+.1N);
 label("$m$",B12+.1N);
-label("$M$",M+.1SE);
+label("$M$",M+.1S);
 label("$A$",a1+.1NE);
-label("$B$",b1+(.1,.2));
+label("$B$",b1+.1N);
 label("$O$",B+(.0,.1));
 

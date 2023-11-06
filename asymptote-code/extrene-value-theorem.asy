@@ -2,7 +2,7 @@ import graph;
 import geometry;
 
 usepackage("amsmath");
-usepackage("bm");
+usepackage("mtpro2");
 usepackage("empheq");
 
 texpreamble("\include{commands}");

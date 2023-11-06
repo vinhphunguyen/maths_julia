@@ -25,13 +25,13 @@ real alpha3=180-alpha1-alpha2;
 
 draw(pic2,A--B--C--cycle,p);
 
-label(pic2,"$A$",A+0.3S);
-label(pic2,"$B$",B+0.3S);
-label(pic2,"$C$",C+0.25N);
+label(pic2,"$B$",A+0.3S);
+label(pic2,"$C$",B+0.3S);
+label(pic2,"$A$",C+0.25N);
 
-label(pic2,"$c$",0.5(A+B)+0.3S);
-label(pic2,"$b$",0.5(A+C)+0.35W+.1N);
-label(pic2,"$a$",0.5(B+C)+0.4E);
+label(pic2,"$a$",0.5(A+B)+0.3S);
+label(pic2,"$c$",0.5(A+C)+0.35W+.1N);
+label(pic2,"$b$",0.5(B+C)+0.4E);
 
 
 draw(arc(A,0.5,0,alpha1),PenMargins);

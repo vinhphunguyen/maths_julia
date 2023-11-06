@@ -8,7 +8,8 @@ usepackage("mtpro2");
 
 settings.outformat="pdf"; // output is pdf
 
-size(6cm, keepAspect=true);
+size(4.5cm, keepAspect=true);
+
 defaultpen(fontsize(12pt));
 
 picture pic1, pic2,pic3,pic4;
