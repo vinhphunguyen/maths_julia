@@ -10,8 +10,6 @@ settings.outformat="pdf"; // output is pdf
 size(6cm, keepAspect=true);
 defaultpen(fontsize(12pt));
 
-
-
 real r = 1;
 
 pair B=(0,0);
@@ -28,7 +26,6 @@ pen pb =blue+.5pt;
 pen pc =purple+.5pt;
 
 //draw(A--B--C--cycle,p);
-
 
 draw(A--B,StickIntervalMarker(1,2,angle=-25 ) );
 draw(B--C,p );

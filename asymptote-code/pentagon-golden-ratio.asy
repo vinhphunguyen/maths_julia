@@ -71,8 +71,6 @@ add(pic2);
 
 pair H=extension( A,D,C,Ee );
 
-
-
 fill(pic1,H--A--C--cycle,pink);
 fill(pic1,H--D--Ee--cycle,cyan);
 
