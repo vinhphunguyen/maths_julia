@@ -12,9 +12,9 @@ using PyCall
 mpl = pyimport("matplotlib")
 plt = pyimport("matplotlib.pyplot")
 pat = pyimport("matplotlib.patches")
-sns = pyimport("seaborn")
+#sns = pyimport("seaborn")
 
-sns.set_style("ticks") # dark_background,
+#sns.set_style("ticks") # dark_background,
 
 rcParams = PyDict(mpl["rcParams"])
 rcParams["font.size"] = 16
@@ -39,18 +39,14 @@ function fixed_point_iter(f,x0,epsilon,maxIter,ta,filename)
   while ( true )
      i += 1
      x  = f(x0)
-
      append!( xa, x0)
      append!( xa, x0)
      append!( xa, x )
      append!( ya, x0)
      append!( ya, x )
      append!( ya, x )
-
      @printf "%i %s %0.12f\n" i  " iteration," x
-
      if ( ( abs(x-x0) < epsilon ) | ( i > maxIter) ) break end # if iterates are close, stop
-
      x0   = x
    end
    # now, do the plotting
@@ -104,7 +100,7 @@ function fixed_point_iter_convergence(f,x0,epsilon,maxIter,alpha)
 end
 
 # call the function for the function fx defined above
-#fixed_point_iter(fx,0.1,1e-12,100,0:0.01:1,"plot-fixed-point-iterations-nice-zoom.pdf")
+fixed_point_iter(fx,0.1,1e-12,100,0.6:0.01:.7,"plot-fixed-point-iterations-nice-zoom.pdf")
 
 
 #fixed_point_iter(x->1+0.5*sin(x),0.,1e-12,100,0:0.1:3,"plot-fixed-point-iterations-f1.pdf")
@@ -185,5 +181,6 @@ data[:,2] = xs
 data[:,3] = xa
 
 
-pretty_table(data, ["n", "x", "alpha-xn"],formatters = ft_printf("%5.8f"))
-pretty_table(data, ["n", "x", "alpha-xn"], backend = :latex,formatters = ft_printf("%5.13f"))
+#pretty_table(data, ["n", "x", "alpha-xn"],formatters = ft_printf("%5.8f"))
+pretty_table(data, header=["n", "x", "alpha-xn"], backend = Val(:latex),formatters = ft_printf("%5.13f"))
+

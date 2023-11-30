@@ -1,6 +1,6 @@
 using PrettyTables
 using LaTeXStrings
-using Gadfly, ColorSchemes
+using ColorSchemes
 using PyPlot
 import Cairo, Fontconfig
 using PyCall
@@ -51,7 +51,8 @@ function get_root_index(roots,r)
 	end
 end
 
-function plot_newton_fractal(f,fprime;n=200,domain=(-1,1,-1,1))
+# plot newton fractal function
+function plot_newton_fractal(f,fprime,n, max_iter, domain)
   roots = ComplexF64[]
   m     = zeros(n,n)
 
@@ -61,7 +62,7 @@ function plot_newton_fractal(f,fprime;n=200,domain=(-1,1,-1,1))
   for (ix,x) in enumerate(xarrays)
     for (iy,y) in enumerate(yarrays)
        z0 = x + y * im
-       r,counter  = newton(z0,f,fprime)
+       r,counter  = newton(z0,f,fprime, max_iter=max_iter)
        if r  != 0
 	       ir = get_root_index(roots,r)
 	        # println("$roots")
@@ -71,39 +72,35 @@ function plot_newton_fractal(f,fprime;n=200,domain=(-1,1,-1,1))
        end
     end
   end
-
   nroots = length(roots)
   return roots,m
 end
 
-f(z)      = z^12-1
-fprime(z) = 12*z^11
 
 
-domain=(-2,2,-2,2)
+function generate_newton_fractal(f,fp,domain,n,max_iter)
+    roots,m = plot_newton_fractal(f,fp,n,max_iter, domain)
+    c = plt.imshow(m, cmap ="gnuplot", interpolation ="nearest", origin ="lower")
+    #plt.colorbar(c)
+    plt.axis("off")
+    plt.show()
+    plt.savefig("plot-NR1.pdf",bbox_inches="tight")
+end
 
-roots,m = plot_newton_fractal(f,fprime,n=2000,domain=domain)
+f(z)      = sin(z)-1
+fprime(z) = cos(z)
+domain=(-8,4,-4,4)
+n= 500
+max_iter = 300
+generate_newton_fractal(f,fprime,domain,n,max_iter)
 
-c = plt.imshow(m, cmap ="hot", interpolation ="nearest", origin ="lower")
-plt.colorbar(c)
-plt.axis("off")
-plt.show()
-plt.savefig("plot-NR1.pdf",bbox_inches="tight")
 # using Gadfly, not so happy with it
 # myplot=spy(m,Scale.ContinuousColorScale(p -> get(ColorSchemes.sunset, p)))
 # draw(PDF("myplot.pdf", 3inch, 3inch), myplot)
 
-##
-## { item_description }
-##
-f(z)      = sin(z)-1
-fprime(z) = cos(z)
-z0  = pi/2-0.5 - 0.5im
-rs  = newton_0(z0,f,fprime)
+# z0  = pi/2-0.5 - 0.5im
+# rs  = newton_0(z0,f,fprime)
 
-
-#pretty_table(data, ["n", "S1"],formatters = ft_printf("%5.8f"))
-pretty_table(rs, ["Deltax"], backend = :latex)
 
 
 

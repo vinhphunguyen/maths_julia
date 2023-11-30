@@ -1,5 +1,5 @@
 using PrettyTables
-using Plots
+using Plots, Images
 using LaTeXStrings
 using Printf
 
@@ -8,6 +8,11 @@ gr()
 # Euler-Cromer method to solve Kepler's 2 body problem
 # length: AU
 # time: years
+
+sun   = load("sun.jpg")
+earth = load("earth.png")
+
+
 
 δ = 6e-3
 
@@ -85,3 +90,5 @@ anim = @animate for i in 1:stepCount
 	#savefig(filename)
 
 gif(anim, "mercury.gif", fps=30)
+
+

@@ -17,6 +17,8 @@ ta    = 0:0.1:T
 xe    = zeros(length(ta))
 ve    = zeros(length(ta))
 
+
+
 for i=1:length(ta)
 	t     = ta[i]
 	xe[i] =  A*cos(ω0*t-ϕ)
