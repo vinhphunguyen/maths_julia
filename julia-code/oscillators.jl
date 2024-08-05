@@ -24,7 +24,7 @@ for i=1:length(ta)
 end
 
 
-pyplot()
+#pyplot()
 p=plot(ta,xt,legend=false,size=(250,250))
 plot!(ta,b1,legend=false,color="red", linestyle = :dash)
 plot!(ta,b2,legend=false,color="red", linestyle = :dash)

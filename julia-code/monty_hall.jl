@@ -45,7 +45,8 @@ function monty_hall_one_trial(changed)
 
     #availabel_doors = [ d for d in 1:number_of_doors if d ∉ (chosen_number,revealed_number)]
     avai_doors = setdiff(1:number_of_doors, (chosen_number,revealed_number))
-    chosen_number = rand(avai_doors)
+    #chosen_number = rand(avai_doors)
+    chosen_number = avai_doors[1]
   end 
 
   return chosen_number == 1

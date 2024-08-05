@@ -10,7 +10,7 @@ mpl = pyimport("matplotlib")
 plt = pyimport("matplotlib.pyplot")
 pat = pyimport("matplotlib.patches")
 sns = pyimport("seaborn")
-tools=pyimport("mpl_toolkits.axes_grid.inset_locator")
+#tools=pyimport("mpl_toolkits.axes_grid.inset_locator")
 
 sns.set_style("ticks") # dark_background,
 
@@ -347,7 +347,7 @@ function dd()
 end
 
 function plot_symbol_objs()
-@vars x
+@syms x
 
 f = 1 / ( 1 + 25 * x * x)
 f2  = diff(f,x,2)

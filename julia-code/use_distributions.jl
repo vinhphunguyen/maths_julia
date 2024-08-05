@@ -5,6 +5,8 @@ using StatsBase
 using Distributions
 #using Statistics
 
+# this file: normal distribution 
+
 mpl = pyimport("matplotlib")
 plt = pyimport("matplotlib.pyplot")
 pat = pyimport("matplotlib.patches")
@@ -31,8 +33,6 @@ function set_size(scale=1)
 	return fig_dim
 end
 
-
-
 function do_plot(filename)
 
      xGrid = -5:.01:5
@@ -40,24 +40,14 @@ function do_plot(filename)
      normalPDF(z) = pdf(normal_dist,z)
  
 	fig , ax = plt.subplots(1, 1, figsize=set_size())
-
-#spine placement data centered
-# ax.spines["left"].set_position(("data", 0.0))
-# ax.spines["bottom"].set_position(("data", 0.0))
-# ax.spines["right"].set_color("none")
-# ax.spines["top"].set_color("none")
-
 	ax.spines["right"].set_visible(false)
 	ax.spines["top"].set_visible(false)
 	ax.xaxis.set_ticks_position("bottom")
 	#ax.xaxis.set_major_formatter(mpl.ticker.FormatStrFormatter("%d"))
 	#ax.set_xticks([0,1,2])
 	#ax.set_yticks([0,0.25,0.5])
-
-
 	plt.plot(xGrid,normalPDF.(xGrid),color="red")
 	plt.ylim(bottom=0)
-
 	# filled area
 	xbar = mean(normal_dist)
 	sig  = std(normal_dist)
@@ -75,7 +65,7 @@ function do_plot(filename)
 	b2l = range(pt3l,pt2l,step=0.01)
 	b2r = range(pt2r,pt3r,step=0.01)
 
-	plt.fill_between(a, normalPDF.(a), color="yellow", alpha=1.)
+	plt.fill_between(a,   normalPDF.(a), color="yellow", alpha=1.)
 	plt.fill_between(b1l, normalPDF.(b1l), color="orange", alpha=1.)
 	plt.fill_between(b1r, normalPDF.(b1r), color="orange", alpha=1.)
 	plt.fill_between(b2l, normalPDF.(b2l), color="orange", alpha=.5)
@@ -88,7 +78,6 @@ function do_plot(filename)
 end
 
 function do_plot2(filename)
-
      xGrid        = -5:.01:7
      normal_dist1 = Normal(0,1)
      normal_dist2 = Normal(2,2)
@@ -96,13 +85,6 @@ function do_plot2(filename)
      normalPDF2(z) = pdf(normal_dist2,z)
  
 	fig , ax = plt.subplots(1, 1, figsize=set_size())
-
-#spine placement data centered
-# ax.spines["left"].set_position(("data", 0.0))
-# ax.spines["bottom"].set_position(("data", 0.0))
-# ax.spines["right"].set_color("none")
-# ax.spines["top"].set_color("none")
-
 	ax.spines["right"].set_visible(false)
 	ax.spines["top"].set_visible(false)
 	ax.xaxis.set_ticks_position("bottom")
@@ -128,20 +110,12 @@ function do_plot2(filename)
 end
 
 function do_plot3(filename)
-
      xGrid        = -7:.01:7
      normal_dist1 = Normal(0,2)
      normalPDF1(z) = pdf(normal_dist1,z)
      normalCDF1(z) = cdf(normal_dist1,z)
  
 	fig , ax = plt.subplots(1, 1, figsize=set_size())
-
-#spine placement data centered
-# ax.spines["left"].set_position(("data", 0.0))
-# ax.spines["bottom"].set_position(("data", 0.0))
-# ax.spines["right"].set_color("none")
-# ax.spines["top"].set_color("none")
-
 	ax.spines["right"].set_visible(false)
 	ax.spines["top"].set_visible(false)
 	ax.xaxis.set_ticks_position("bottom")

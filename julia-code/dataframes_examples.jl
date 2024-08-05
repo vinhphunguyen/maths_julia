@@ -42,8 +42,8 @@ function do_plot(bin_wdith,filename,density)
 	names(train) # => 12-element Vector{String}: "Loand_ID",...
 	first(train,5)
 
-	pretty_table(first(train,5), ["Father", "Son"],formatters = ft_printf("%5.8f"))
-    pretty_table(first(train,5), ["Father", "Son"], backend = :latex,formatters = ft_printf("%5.2f",[2]))
+	pretty_table(first(train,5), header=["Father", "Son"],formatters = ft_printf("%5.8f"))
+    pretty_table(first(train,5), header=["Father", "Son"], backend = Val(:latex),formatters = ft_printf("%5.2f",[2]))
 
 	xmin = minimum(train[!,:Father])
 	xmax = maximum(train[!,:Father])
@@ -54,10 +54,11 @@ function do_plot(bin_wdith,filename,density)
 	#ax.hist(train[!,:Father],bins=n,normed=density)
 	#ax.hist(train[!,:Father],bins=n,density=density)
 
-	#sns.histplot(data=train[!,:Father], stat="probability", ax=ax)
-	sns.ecdfplot(data=train[!,:Father], ax=ax)
+	sns.histplot(data=train[!,:Son], stat="probability", ax=ax,kde=true)
+	#sns.displot(data=train[!,:Son], kind="kde")
+	#sns.ecdfplot(data=train[!,:Father], ax=ax)
 
-    plt.xlabel("Father's height")
+    plt.xlabel("Son's height")
     plt.ylabel("Cumulative distribution function")
 
 	# ax.spines["right"].set_visible(false)
@@ -122,8 +123,8 @@ function do_plot_binomial(n,p,filename)
 	plt.savefig(filename,bbox_inches="tight")
 end
 
-do_plot_binomial(10,0.4,"binomial-histogram-10-04.pdf")
-do_plot_binomial(5,0.8,"binomial-histogram-5-08.pdf")
+#do_plot_binomial(10,0.4,"binomial-histogram-10-04.pdf")
+#do_plot_binomial(5,0.8,"binomial-histogram-5-08.pdf")
 
 
 function do_plot_spreads(bin_wdith,filename)
@@ -162,4 +163,4 @@ function do_plot_spreads(bin_wdith,filename)
 	return train
 end
 
-do_plot_spreads(1,"histogram-spread2.pdf")
+#do_plot_spreads(1,"histogram-spread2.pdf")

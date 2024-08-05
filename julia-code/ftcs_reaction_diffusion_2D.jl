@@ -183,7 +183,7 @@ params =    [0.16 0.08 0.035 0.065;
              0.16 0.08 0.054 0.063;
              0.16 0.08 0.035 0.06]
 
-Da, Db, f, k = params[end,:]
+Da, Db, f, k = params[1,:]
 
 p = (Da, Db, f, k, step(xyd))
 tspan = (0.0, 20000.0)
