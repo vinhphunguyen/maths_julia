@@ -1,9 +1,17 @@
+# numerical solution of the chasing duck-dog problem
+# Problem: 
+# a duck is traveling on a circle of radius r with angular speed ω
+# a dog is chasing the duck with a constant speed v = k ( ω * r ), k in [0,∞]
+# Animation using Makie
+
 using Plots
 using Printf
 using LinearAlgebra
+using GLMakie
+using DataStructures: CircularBuffer
 
-gr()
-
+# generate points on a circle of radius r
+# for visualization the duck's path
 function generate_circle(radius, num_points)
     theta = range(0, 2π, length=num_points)
     x = radius * cos.(theta)
@@ -11,7 +19,7 @@ function generate_circle(radius, num_points)
     return x, y
 end
 
-radius = 1.0
+radius     = 1.0
 num_points = 100
 
 
@@ -23,7 +31,7 @@ function update(x1, x2, velo, dt)
 end
 
 # a duck is traveling on a circle of radius r with angular speed ω
-# a dog is chasing the duck with a constant speed v = ω * r (pos1)
+# a dog is chasing the duck with a constant speed v = k * ω * r (pos1)
 function chaser(pos1, pos2, r, omega, k, dt, epsilon, tmax)
 	i    = 1
 	t    = 0
@@ -51,30 +59,83 @@ function chaser(pos1, pos2, r, omega, k, dt, epsilon, tmax)
             break
         end
 	end
-    return (t, pos1, pos2)
+    return (t, i, pos1, pos2)
 end
 
-# position of four bugs
+function dog_duck_chasing()
+    # position of duck and dog
+    pos1 = Array{Float64, 1}[]
+    pos2 = Array{Float64, 1}[]
 
-pos1 = Array{Float64, 1}[]
-pos2 = Array{Float64, 1}[]
+    # add initial position of them
+    push!(pos1,[ 0.0,0.0])
+    push!(pos2,[ 1.0, 0.0]) # cannot change this
 
-# add initial position of bugs
-push!(pos1,[ 0.0,0.0])
-push!(pos2,[ 0.0, 1.0])
+    r       = 1.0
+    omega   = 2.0
+    k       = 2/3
+    dt      = 0.05
+    epsilon = 5e-2;
+    tmax    = 10.
 
-r     = 1.0
-omega = 2.0
-k     = 3/3
-dt   = 0.1
-epsilon = 5e-2;
-tmax =10.
+    time, stepCount, pos1, pos2 = chaser(pos1, pos2, r, omega, k, dt, epsilon, tmax )
 
-time, pos1, pos2 = chaser(pos1, pos2, r, omega, k, dt, epsilon, tmax )
+    return time, stepCount, pos1, pos2
+end
 
+# let the duck and dog run
+time, stepCount, pos1, pos2 = dog_duck_chasing()
 
-# plot(; size=(400, 400), axisratio=:equal, legend=false)
-# xlims!(-1.5, 1.5)
-# ylims!(-1.5, 1.5)
-# plot!(first.(pos1[1:length(pos1)]), last.(pos1[1:length(pos1)]), seriestype=:path, label="Bug 1")
-# plot!(first.(pos2[1:length(pos1)]), last.(pos2[1:length(pos1)]), seriestype=:path, label="Bug 2")
+# animation using Makie
+
+function progress_for_one_step!(pos1, pos2, i)
+    return pos1[i+1,], pos2[i+1,]
+end
+
+function animstep!(pos1, pos2, i, duck, dog, traj)
+    pos1_new, pos2_new = progress_for_one_step!(pos1, pos2, i)
+    duck[] = [Point2f(pos2_new)]
+    dog[]  = [Point2f(pos1_new)]
+    push!(traj[], Point2f(pos1_new))
+    traj[] = traj[] # <- important! Updating in-place the value of an
+    # `Observable` does not trigger an update!
+end
+
+x,y = generate_circle(radius, num_points)
+
+fig    = Figure()
+display(fig)
+ax    = Axis(fig[1, 1], aspect=1) # aspect ratio 1:1
+duck  = Observable([Point2f(pos2[1])])
+dog   = Observable([Point2f(pos1[1])])
+tail  = 3000 # length of plotted trajectory, in units of `dt`
+# The circular buffer datastructure makes making stepping-based
+# animations very intuitive
+traj  = CircularBuffer{Point2f}(tail)
+fill!(traj, Point2f(pos1[1])) # add correct values to the circular buffer
+traj = Observable(traj) # make it an observable
+
+lines!(x, y)
+scatter!(ax, duck; marker=:circle, strokewidth=2,
+    color=:purple)
+
+scatter!(ax, dog; marker=:circle, strokewidth=2,
+    color=:black, markersize=12)
+
+# then its trajectory, with a nice fadeout color
+# c = to_color(:purple)
+# tailcol = [RGBAf(c.r, c.g, c.b, (i / tail)^2) for i in 1:tail]
+lines!(ax, traj; linewidth=3, color=:orange)
+
+xlims!(ax, -1.1, 1.1)
+ylims!(ax, -1.1, 1.1)
+
+frames = 1:stepCount-1
+
+record(fig, "video.mp4", frames; framerate=20) do i # i = frame number
+    for j in 1:5 # step 5 times per frame
+        animstep!(pos1, pos2, i, duck, dog, traj)
+    end
+    # any other manipulation of the figure here...
+end # for each step of this loop, a frame is recorded
+
