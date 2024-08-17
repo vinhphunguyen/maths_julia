@@ -1,104 +1,137 @@
-using Plots
+
 using Printf
 using LinearAlgebra
+using CairoMakie
+using DataStructures: CircularBuffer
 
-# update the chaser (x1) 
+# update the chaser (x1) for one step
 function update(x1, x2, velo, dt)
 	d_vec  = normalize(x2- x1)
     x      = x1 + velo * dt * d_vec
     return x
 end
 
-
-function chaser(pos1, pos2, pos3, pos4, velo, dt, epsilon)
+# chaser function, for all bugs, all time steps
+function chaser!(data, velo, dt, epsilon)
 	i    = 1
 	t    = 0
 	while (true)
-		x1 = pos1[i]
-		x2 = pos2[i]
-		x3 = pos3[i]
-		x4 = pos4[i]
+        for b=1:num_of_bugs
+            pos_b1  = data[b]
+            pos_b2  = b == num_of_bugs ? data[1] : data[b+1]
+            x1      = pos_b1[i,:]
+            x2      = pos_b2[i,:]
+            x1_new  = update(x1, x2, velo, dt)
+            data[b] = vcat(data[b], x1_new')
+        end
 
-		x1_new = update(x1, x2, velo, dt)
-		x2_new = update(x2, x3, velo, dt)
-		x3_new = update(x3, x4, velo, dt)
-		x4_new = update(x4, x1, velo, dt)
+        x1_new = data[1][i+1,:]
+        x2_new = data[2][i+1,:]
+        dx     = norm(x1_new - x2_new)
 
-		dx = norm( x1_new - x2_new )
-
-		if (dx < epsilon ) break; end
-
-		push!(pos1,x1_new)
-		push!(pos2,x2_new)
-		push!(pos3,x3_new)
-		push!(pos4,x4_new)
+        if (dx < epsilon)
+            break
+        end
 
 		i = i + 1
 		t = t + dt
 		#if (i > 60) break; end
 	end
-	x1_values = [point[1] for point in pos1]
-	y1_values = [point[2] for point in pos1]
-
-	x2_values = [point[1] for point in pos2]
-	y2_values = [point[2] for point in pos2]
-
-	x3_values = [point[1] for point in pos3]
-	y3_values = [point[2] for point in pos3]
-
-	x4_values = [point[1] for point in pos4]
-	y4_values = [point[2] for point in pos4]
-
-	size = 6
-
-	anim = @animate for i in 1:length(pos1)
-		# the whole plot
-		plot(;size=(400,400), axisratio=:equal, legend=false)
-		xlims!(-0.5,0.5)
-		ylims!(-0.5,0.5)
-
-		plot!([0.5, 0.5, -0.5, -0.5],[-0.5,0.5,0.5,-0.5],linewidth=2, axisratio=:equal)
-		plot!([x1_values[i], x2_values[i], x3_values[i], x4_values[i], x1_values[i]],
-			  [y1_values[i], y2_values[i], y3_values[i], y4_values[i], y1_values[i]],
-			linewidth=3, axisratio=:equal)
-
-		scatter!([x1_values[i]],[y1_values[i]],axisratio=:equal, markersize=size)
-		scatter!([x2_values[i]],[y2_values[i]],axisratio=:equal, markersize=size)
-		scatter!([x3_values[i]],[y3_values[i]],axisratio=:equal, markersize=size)
-		scatter!([x4_values[i]],[y4_values[i]],axisratio=:equal, markersize=size)
-
-		plot!(x1_values[1:i],y1_values[1:i],axisratio=:equal)
-		plot!(x2_values[1:i],y2_values[1:i],axisratio=:equal)
-		plot!(x3_values[1:i],y3_values[1:i],axisratio=:equal)
-		plot!(x4_values[1:i],y4_values[1:i],axisratio=:equal)
-
-		if ( i% 10 == 0)
-			filename = string("chase","$(Int(i)).pdf")
-			savefig(filename)
-		end
-
-		end
-	gif(anim, "chase.gif", fps=15)
-	return t
+	return t, i
 end
 
-# position of four bugs
+num_of_bugs = 6
+# data: contain the position in time of all the bugs
+# data[i]: matrix of positions of bug i for all time steps
+data = Vector{Matrix{Float64}}(undef, num_of_bugs)
 
-pos1 = Array{Float64, 1}[]
-pos2 = Array{Float64, 1}[]
-pos3 = Array{Float64, 1}[]
-pos4 = Array{Float64, 1}[]
+# add initial position of bugs (vertices of regular polygon)
+θ = 2π / num_of_bugs
+for i=1:num_of_bugs
+    data[i] = [cos((i-1)*θ) sin((i-1)*θ)]
+end
 
-# add initial position of bugs
-push!(pos1,[ 0.5,-0.5])
-push!(pos2,[ 0.5, 0.5])
-push!(pos3,[-0.5, 0.5])
-push!(pos4,[-0.5,-0.5])
-
-
-velo = 1.0
-dt   = 0.01
+velo    = 1.0
+dt      = 0.01
 epsilon = 5e-2;
 
-time = chaser(pos1,pos2,pos3,pos4, velo, dt, epsilon)
+time, stepCount    = chaser!(data, velo, dt, epsilon)
 
+
+function animstep!(data, i, bugs, traj)
+    bugs[] = [Point2f(data[b][i+1,:]) for b in 1:num_of_bugs]
+    #squares[] = [Point2f(pos1_new), Point2f(pos2_new), Point2f(pos3_new), Point2f(pos4_new), Point2f(pos5_new)]
+    for b = 1:num_of_bugs
+        push!(getindex(traj)[b], Point2f(data[b][i+1,:])) # add the new position to the circular buffer
+    end
+    # `Observable` does not trigger an update!
+end
+
+# Function to generate pentagon coordinates
+function generate_pentagon(radius, center, num_points=num_of_bugs)
+    angles = range(0, stop=2π, length=num_points + 1)
+    x = [center[1] + radius * cos(angle) for angle in angles]
+    y = [center[2] + radius * sin(angle) for angle in angles]
+    return x, y
+end
+
+# Parameters for the pentagon
+radius = 1.0
+center = (0.0, 0.0)
+
+# Generate pentagon coordinates
+x, y = generate_pentagon(radius, center)
+
+fig  = Figure(); display(fig)
+ax   = Axis(fig[1, 1], aspect=1) # aspect ratio 1:1
+bugs = Observable([Point2f(data[b][1,:]) for b in 1:num_of_bugs])
+# squares = Observable([Point2f(pos1[1]), Point2f(pos2[1]), Point2f(pos3[1]), Point2f(pos4[1]), Point2f(pos5[1]), Point2f(pos1[1])])
+
+# trajectory tail
+tail  = 3000 # length of plotted trajectory, in units of `dt`
+traj  = [CircularBuffer{Point2f}(tail) for _ in 1:num_of_bugs]
+for b=1:num_of_bugs
+    fill!(traj[b], Point2f(data[b][1,:])) # add correct values to the circular buffer
+end
+traj = Observable(traj) # make it an observable
+
+
+# Plot the pentagon
+lines!(ax, x, y, linewidth=2, linestyle=:solid, color=:blue)
+
+scatter!(ax, bugs; marker=:circle, strokewidth=2, color=:purple) # plot the duck
+# poly!(ax, squares; closed=true, strokewidth=2, color=:purple) # plot the square
+for b = 1:num_of_bugs
+ lines!(ax, getindex(traj)[b]; linewidth=3, color=:orange)
+end
+
+
+xlims!(ax, -1.1, 1.1)
+ylims!(ax, -1.1, 1.1)
+
+frames = 1:stepCount-1
+
+record(fig, "video.mp4", frames; framerate=20) do i # i = frame number
+    for j in 1:5 # step 5 times per frame
+        animstep!(data, i, bugs, traj)
+    end
+    # any other manipulation of the figure here...
+end # for each step of this loop, a frame is recorded
+
+# make a pdf 
+with_theme(theme_latexfonts()) do
+    fontsize_theme = Theme(fontsize=40)
+    set_theme!(fontsize_theme)
+    fig = Figure()
+    display(fig)
+    ax = Axis(fig[1, 1], aspect=1) # aspect ratio 1:1
+    hidedecorations!(ax)  # hides ticks, grid and lables
+    hidespines!(ax)  # hide the frame
+    lines!(ax, x, y, color=:blue)
+    #scatter!(ax, first.(pos5), last.(pos5), color=:green, markersize=5)
+	for i in 1:2:stepCount
+        squares0 = [Point2f(data[b][i,:]) for b in 1: num_of_bugs]
+        poly!(ax, squares0; closed=true, strokewidth=.2, color=:gray) # plot the square
+	end
+    save("frame.pdf", fig)
+end
