@@ -1,23 +1,21 @@
 using LaTeXStrings
 using Printf
 using LinearAlgebra
-using GLMakie
+using CairoMakie
+using DataStructures: CircularBuffer
 
-
-function n_body()
+function n_body(x1,x2,v1,v2, time,dt)
 	# Euler-Cromer method to solve Kepler's N body problem
 	# length: AU
 	# time: years
 	m1 = 1;
-	m2 = 3.00348959632E-6;
-	m3 = m2*1.23000383E-2; 
-	G  = 2.95912208286e-4; #gravitational constant
+	m2 = 1;
+	m3 = 1; 
+	G  = 1#2.95912208286e-4; #gravitational constant
 
 	N    = 3;
 	ndim = 3;
 
-	time      = 6. # 3.0 # 3 years or 3 periods
-	dt        = 0.01
 	stepCount = Int32(floor(time/dt))
 
 	mass     = zeros(N)
@@ -31,13 +29,13 @@ function n_body()
 
 	# initial conditions
 
-	pos[:,1,1] = [0; 0.0; 0];
-	pos[:,2,1] = [-0.1667743823220;0.9690675883429;-0.0000342671456;];
-	pos[:,3,1] = [-0.1694619061456;0.9692330175719;-0.0000266725711];
+	pos[:,1,1]  = [x1; x2;0];
+    pos[:,2, 1] = -pos[:, 1, 1]
+	pos[:,3,1]  = [0.0;0.0;0.0];
 
-	vel[:,1,1] = [0.; 0.; 0.];
-	vel[:,2,1] = [-0.0172346557280;-0.0029762680930;-0.0000004154391];
-	vel[:,3,1] = [-0.0172817331582; -0.0035325102831;0.0000491191454];
+    vel[:,1,1] = [v1; v2;0.]
+	vel[:,2,1] = [v1; v2;0.0];
+	vel[:,3,1] = [-2v1; -2v2;0.]
 
 	function force(ri,rj,mj)
 	 	rij = rj - ri
@@ -67,34 +65,77 @@ function n_body()
 	return pos, stepCount
 end
 
-function progress_for_one_step!(pos,i)
-    return pos[:,:,i+1,]
+pos, stepCount = n_body(
+-1, 
+0.,
+0.464445237398184,
+0.396059973403921,
+30,
+0.0001 
+)
+
+function gen_plot(pos, filename)
+    with_theme(theme_latexfonts()) do
+        fontsize_theme = Theme(fontsize=40)
+        set_theme!(fontsize_theme)
+        fig = Figure(resolution=(1000, 1000), fonts=(; regular="CMU Serif"))
+        display(fig)
+        ax = Axis(fig[1, 1], aspect=1.0, xlabel=L"$x$", ylabel=L"$y$") # aspect ratio 1:1
+        #xlims!(ax, -1.1, 1.1)
+        #ylims!(ax, -1.1, 1.1)
+        balls = Observable([Point2f(pos[1:2, 1, 1]), Point2f(pos[1:2, 2, 1]), Point2f(pos[1:2, 3, 1])])
+        lines!(ax, pos[1, 1, :], pos[2, 1, :], color=:red, linewidth=4)
+        lines!(ax, pos[1, 2, :], pos[2, 2, :], color=:blue, linewidth=4)
+        lines!(ax, pos[1, 3, :], pos[2, 3, :], color=:black, linewidth=4)
+        #lines!(ax, time, first.(sol.(time)), color=:cyan)
+        #lines!(ax, time, last.(sol.(time)), color=:purple)
+        scatter!(ax, balls; marker=:circle, strokewidth=2, markersize=20,
+            strokecolor=:purple,
+            color=:black)
+        save(filename, fig)
+    end
 end
 
-function animstep!(pos,i, balls)
-    pos_new = progress_for_one_step!(pos,i)
-    balls[] = [Point2f(pos_new[1:2,1]), Point2f(pos_new[1:2,2])]
+gen_plot(pos, "n_body.pdf")
+
+function animstep!(pos,i, balls, traj)
+    balls[] = [Point2f(pos[1:2,1,i+1]), 
+	           Point2f(pos[1:2,2,i+1]),
+	           Point2f(pos[1:2,3,i+1])]
+    for b = 1:3
+        push!(getindex(traj)[b], Point2f(pos[1:2,b,i+1])) # add the new position to the circular buffer
+    end
 end
 
-pos, stepCount = n_body()
+# animation 
+tail  = 3000 # length of plotted trajectory, in units of `dt`
+traj  = [CircularBuffer{Point2f}(tail) for _ in 1:3]
+for b = 1:3
+    fill!(traj[b], Point2f(pos[1:2, b, 1])) # add correct values to the circular buffer
+end
+traj = Observable(traj) # make it an observable
 
-fig = Figure()
-display(fig)
-ax = Axis(fig[1,1])
-balls = Observable([Point2f(pos[1:2,1,1]), Point2f(pos[1:2,2,1] )])  
-scatter!(ax, balls; marker = :circle, strokewidth = 2, 
-        strokecolor = :purple,
-        color = :black)
 
-xlims!(ax, -1, 1)
-ylims!(ax, -1, 1)
+# Create the initial plot
+scene = Scene()
+balls = Observable([Point2f(0, 0), Point2f(0, 0), Point2f(0, 0)])
+scatter!(scene, balls; marker=:circle, strokewidth=2, strokecolor=:purple, color=:black)
+
+# Plot the trajectories
+for b in 1:3
+    lines!(scene, getindex(traj)[b], color=:orange, linewidth=3)
+end
+
 
 frames = 1:stepCount-1
 
-record(fig, "video.mp4", frames; framerate = 60) do i # i = frame number
-	for j in 1:5 # step 5 times per frame
-    	animstep!(pos, i, balls)
-	end
-    # any other manipulation of the figure here...
+record(scene, "video.mp4", frames; framerate=30) do i # i = frame number
+    for j in 1:10 # step fewer times per frame
+        animstep!(pos, i, balls, traj)
+    end
+    # Update the plot incrementally
+    scatter!(scene, balls; marker=:circle, strokewidth=2, strokecolor=:purple, color=:black)
+    for b in 1:3
+        lines!(scene, getindex(traj)[b], color=:orange, linewidth=3)
+    end
 end # for each step of this loop, a frame is recorded
-
